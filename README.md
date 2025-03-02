@@ -1,6 +1,7 @@
 # Proiect Licee~
 
 ## Project mock-ups
+git push
 
 ## Design templates: 
 1. [Edulerns](https://preview.themeforest.net/item/edulerns-education-courses-react-template/full_screen_preview/56351305?_ga=2.189948203.1603511314.1739702591-1683782604.1739702591&_gac=1.247047798.1739702591.CjwKCAiAtsa9BhAKEiwAUZAszQn9LekGhJxmOyvsl9BSJ6hBgqYngtT4affDMd_dRATFxNkH8H3CMhoCv3IQAvD_BwE)
