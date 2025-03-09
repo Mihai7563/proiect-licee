@@ -1,17 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --primary: #324787;
-    --accent: #f53f13;
-    --white: #fff;
+    --primary: #778DA9;
+    --secondary: #84A98C ;
+    --accent-1: #284B63;
+    --accent-2: #3C6E71;
+    --cream: #F5EBE0; 
+    --white-1: #fff;
+    --grey-1: #575757;
+    --black-1: #000;
+}
+
+body{
+    /* background-color: var(--cream); */
 }
 
 .text-color-content-1{
-    color: #575757;
+    color: var(--grey-1);
 }
 
 .text-color-heading-1{
-    color: #000000;
+    color: var(--black-1);
 }
 
 .body-font {
@@ -31,11 +40,11 @@
 }
 
 .stats{
-    background-color: var(--primary);
-    color: var(--white);
+    background-color: var(--accent-1);
+    color: var(--cream);
 }
 
 .stats h2 {
-    color: var(--white);
+    color: var(--white-1);
 }
 
