@@ -5,7 +5,6 @@
     --secondary: #84A98C ;
     --accent-1: #284B63;
     --accent-2: #3C6E71;
-    --accent-3: #F53E12;
     --cream: #F5EBE0; 
 
     --black-1: #000;
@@ -21,31 +20,7 @@
 }
 
 body{
-}
-
-.nav-container{
-    background-color: var(--cream);
-}
-
-/* main{
-    background-color: var(--white-1);
-} */
-
-main .container h1,
-main .container p{
-    color: var(--accent-1);
-}
-
-.text-accent-1{
-    color: var(--accent-1);
-}
-
-.bg-accent-1 {
-    background-color: var(--accent-1);
-}
-
-.bg-accent-3{
-    background-color: var(--accent-3);
+    /* background-color: var(--cream); */
 }
 
 header, footer{
@@ -58,21 +33,6 @@ header, footer{
 
 .text-color-heading-1{
     color: var(--black-1);
-}
-
-/* .action-btn-1{
-    background-color: var(--black-1);
-    color: var(--white-1);
-}
-
-.action-btn-2{
-    background-color: var(--accent-2);
-    color: var(--cream);
-} */
-
-.btn:hover{
-    background-color: var(--grey-2);
-    color: var(--grey-1);
 }
 
 .body-font {
@@ -91,7 +51,6 @@ header, footer{
     font-style: normal;
 }
 
-
 .stats{
     background-color: var(--accent-1);
     color: var(--grey-1);
@@ -109,48 +68,4 @@ header, footer{
 .activities h2, .sports h2{
     color: var(--accent-1);
     /* color: var(--black-1); */
-}
-
-
-.description {
-    /* color: var(--cream); */
-}
-
-.big-title {
-    color: var(--cream);
-    font-size: 100px;
-}
-
-.big-title-sm{
-    color: var(--cream);
-}
-
-.card-group {
-    display: flex;
-    justify-content: center;
-}
-
-.custom-card {
-    height: 600px;
-    background-color: var(--black-1);
-}
-
-.img-placeholder {
-    height: 60%;
-    background: repeating-linear-gradient(45deg, #ccc, #ccc 10px, #ddd 10px, #ddd 20px);
-}
-
-@media (min-width: 992px){
-    .hero{
-        height: 860px;
-    }
-
-    #header-card-section{
-        height: 325px;
-    }
-
-    .header-card-container{
-        position: relative;
-        top: -364px;
-    }
 }
