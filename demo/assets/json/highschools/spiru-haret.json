@@ -1,0 +1,24 @@
+{
+    "denumire": "Colegiul Național Spiru Haret",
+    "descriere": "<p>Colegiul Național Spiru Haret este cunoscut pentru excelența sa academică, având o rată de promovabilitate ridicată și elevi cu rezultate remarcabile la concursuri și olimpiade.</p> <p>Oferă un mediu educațional modern, cu diverse activități extracurriculare.</p>",
+    "imagine": "https://invatamantsector2.ro/wp-content/uploads/2017/12/Colegiul-Na%C8%9Bional-%E2%80%9DSpiru-Haret%E2%80%9D_2.jpg",
+    "medieAdmitere" : [
+        {"an": 2024, "medie": 9.75},
+        {"an": 2023, "medie": 9.70},
+        {"an": 2022, "medie": 9.85},
+        {"an": 2021, "medie": 9.65},
+        {"an": 2020, "medie": 9.80}
+    ],
+
+ "promovabilitateBAC" : [
+        {"an": 2024, "rata": 100},
+        {"an": 2023, "rata": 99.2},
+        {"an": 2022, "rata": 100},
+        {"an": 2021, "rata": 100},
+        {"an": 2020, "rata": 97.8}
+    ],
+
+    "profiluri" : ["MATE-INFO", "MATE-INFO BILINGV ENGLEZĂ", "ȘTIINȚELE NATURII", "ȘTIINȚE SOCIALE", "ȘTIINȚE SOCIALE INTENSIV ENGLEZĂ", "FILOLOGIE"],
+    "cluburi" : [],
+    "locatie" : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3041.638146803721!2d26.105148631721683!3d44.43821271289224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff381e41cf97%3A0x8677273ddaf79069!2sColegiul%20Na%C8%9Bional%20%22Spiru%20Haret%22%20Bucure%C5%9Fti!5e1!3m2!1sro!2sro!4v1744221205098!5m2!1sro!2sro"
+}

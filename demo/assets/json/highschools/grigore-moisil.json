@@ -1,0 +1,23 @@
+{
+    "denumire": "Colegiul Național Grigore Moisil",
+    "descriere": "<p>Colegiul Național Grigore Moisil este unul dintre colegiile tinere ale capitalei și candidează cu succes la o poziție fruntașă în top 10. Începând din 1990 poartă numele ilustrului matematician și informatician Grigore Moisil. Atunci a devenit liceu cu profil teoretic și au fost înființate primele clase de matematică-informatică.</p> <p>Deviza noastră este: Învață alături de cei de cei mai buni!</p>",
+    "imagine": " ",
+    "medieAdmitere" : [
+        {"an": 2024, "medie": 9.17},
+        {"an": 2023, "medie": 9.37},
+        {"an": 2022, "medie": 9.36},
+        {"an": 2021, "medie": 9.09},
+        {"an": 2020, "medie": 9.09}
+    ],
+  "promovabilitateBAC" : [
+        {"an": 2024, "rata": 99.5},
+        {"an": 2023, "rata": 99.5},
+        {"an": 2022, "rata": 96.9},
+        {"an": 2021, "rata": 99.5},
+        {"an": 2020, "rata": 100}
+    ],
+
+  "profiluri" : ["MATE-INFO", "MATE-INFO INTENSIV ENGLEZĂ",  "MATE-INFO INTENSIV INFORMATICĂ", "ȘTIINȚELE NATURII", "ȘTIINȚE SOCIALE", "FILOLOGIE"],
+    "cluburi" : [],
+    "locatie" : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3042.242150692841!2d26.038614176426563!3d44.42660847107594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b201cc8cc6f98b%3A0x2237cedb28e166a6!2sColegiul%20Na%C8%9Bional%20%22Grigore%20Moisil%22!5e1!3m2!1sro!2sro!4v1744221416655!5m2!1sro!2sro" 
+}

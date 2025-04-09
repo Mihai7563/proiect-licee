@@ -1,9 +1,25 @@
+<?php
+  $liceu = isset($_GET["liceu"]) ? $_GET["liceu"] : 'liceu-nespecificat'; 
+  $path = "assets/json/highschools/$liceu.json";
+
+  if(!file_exists($path)){
+    http_response_code(404);
+    die();
+  }
+
+  $jsonString = file_get_contents($path);
+  $highschoolData = json_decode($jsonString, true);
+  // echo "<pre>";
+  // print_r($jsonData);
+  // echo "</pre>";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Bootstrap demo</title>
+    <title><?php echo $highschoolData['denumire'] ?> - prezentare liceu</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -15,46 +31,47 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   </head>
   <body class="body-font text-color-content-1">
+
      <!-- NAVBAR -->
-  <div class="nav-container">
-    <nav class="container navbar navbar-expand-lg py-3">
-      <div class="container-fluid">
-          <!-- Logo Placeholder (Rectangular Box) -->
-          <div class="border border-5 border-black px-5 py-3"></div>
-  
-          <!-- Navbar Toggle Button -->
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-  
-          <!-- Navbar Items -->
-          <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-              <ul class="navbar-nav">
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Licee</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#">Top Licee</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#">Recenzii</a>
-                  </li>
-                  <!-- Contact mobile -->
-                  <li class="nav-item d-lg-none">
-                      <a class="nav-link" href="#">Contact</a>
-                  </li>
-              </ul>
-          </div>
-  
-          <!-- Right-side Items -->
-          <div class="d-none d-lg-flex align-items-center">
-              <a class="nav-link mx-2" href="#">Login</a>
-              <a class="nav-link mx-2 d-none d-lg-block" href="#">Contact</a>
-              <a class="nav-link mx-2" href="#"><i class="bi bi-search"></i></a>
-          </div>
-      </div>
+     <div class="nav-container bg-accent-1">
+    <nav class="container navbar navbar-expand-lg heading-font py-3">
+        <div class="container-fluid">
+            <!-- Logo Placeholder (Rectangular Box) -->
+            <div class="border border-5 border-black px-5 py-1 fs-5 fw-bold text-white heading-font">SIMP CITY</div>
+
+            <!-- Navbar Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-grey-1" href="home.html">Acasă</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-grey-1" href="#" data-bs-toggle="dropdown">Licee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-grey-1" href="#">Recenzii</a>
+                    </li>
+                    <!-- Contact mobile -->
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link text-white" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right-side Items -->
+            <div class="d-none d-lg-flex align-items-center">
+                <a class="nav-link mx-2 text-white" href="#">Login</a>
+                <a class="nav-link mx-2 d-none d-lg-block text-white" href="#">Contact</a>
+                <a class="nav-link mx-2 text-white" href="#"><i class="bi bi-search"></i></a>
+            </div>
+        </div>
     </nav>
-  </div>
+    </div>
 
     <header class="mb-5">
       <div class="container my-3">
@@ -63,21 +80,21 @@
             ⭐⭐⭐⭐⭐ <u>91 recenzii</u>
           </div>
           <div class="col-12 col-lg-6 text-lg-end heading-font">
-            RATĂ DE PROMOVABILITATE: 98%
+            RATĂ DE PROMOVABILITATE: 100%
           </div>
         </div>
         <h1 class="heading-font text-color-heading-1 text-center">
-          <span>Colegiul Naţional</span> <br class="d-lg-none"> 
-          <span>Spiru Haret</span>
+          <?php echo $highschoolData['denumire'] ?>
         </h1>
+
+        <!-- Profiluri -->
         <div class="d-none d-lg-flex justify-content-center">
-          <div class="px-2">MATE-INFO</div>
-          <div class="px-2 border-start border-dark">
-            MATE-INFO INTENSIV ENGLEZĂ
-          </div>
-          <div class="px-2 border-start border-dark">ŞTIINTELE NATURII</div>
-          <div class="px-2 border-start border-dark">STIINTE SOCIALE</div>
-          <div class="px-2 border-start border-dark">FILOLOGIE</div>
+          <?php
+            foreach($highschoolData["profiluri"] as $index => $profil){
+              $class = $index ? "px-2 border-start border-dark" : "px-2";
+              echo "<div class='$class'>$profil</div>";
+            }
+          ?>
         </div>
       </div>
     </header>
@@ -90,7 +107,14 @@
             <div class="p-4 stats rounded-3 h-100">
               <h2 class="fs-5 mb-4 text-center heading-font text-color-heading-1 text-uppercase">Medie admitere</h2>
               <ul class="ps-0 mb-0">
-                <li class="d-flex justify-content-between py-2 border-bottom heading-font">
+                <?php
+                  foreach($highschoolData["medieAdmitere"] as $index => $medieAnuala){
+                    $class = $index != sizeof($highschoolData["medieAdmitere"]) - 1 ? "d-flex justify-content-between py-2 border-bottom heading-font" : "d-flex justify-content-between py-2 heading-font";
+                    // var_dump($medieAnuala['an']);
+                    echo "<li class='$class'> <span>".$medieAnuala['an']."</span> <span>".$medieAnuala['medie']."</span></li>";
+                  }
+                ?>
+                <!-- <li class="d-flex justify-content-between py-2 border-bottom heading-font">
                   <span>2024</span> <span>9.75</span>
                 </li>
                 <li class="d-flex justify-content-between py-2 border-bottom heading-font">
@@ -104,7 +128,7 @@
                 </li>
                 <li class="d-flex justify-content-between py-2 heading-font">
                   <span>2020</span> <span>9.61</span>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -112,21 +136,13 @@
             <div class="p-4 stats rounded-3 h-100">
               <h2 class="fs-5 mb-4 text-center heading-font text-color-heading-1 text-uppercase">Rata promovabilitate</h2>
               <ul class="ps-0 mb-0">
-                <li class="d-flex justify-content-between py-2 border-bottom heading-font">
-                  <span>2024</span> <span>98%</span>
-                </li>
-                <li class="d-flex justify-content-between py-2 border-bottom heading-font">
-                  <span>2023</span> <span>100%</span>
-                </li>
-                <li class="d-flex justify-content-between py-2 border-bottom heading-font">
-                  <span>2022</span> <span>99%</span>
-                </li>
-                <li class="d-flex justify-content-between py-2 border-bottom heading-font">
-                  <span>2021</span> <span>97%</span>
-                </li>
-                <li class="d-flex justify-content-between py-2 heading-font">
-                  <span>2020</span> <span>98%</span>
-                </li>
+                <?php
+                  foreach($highschoolData["promovabilitateBAC"] as $index => $promovabilitateAnuala){
+                    $class = $index != sizeof($highschoolData["promovabilitateBAC"]) - 1 ? "d-flex justify-content-between py-2 border-bottom heading-font" : "d-flex justify-content-between py-2 heading-font";
+                    // var_dump($medieAnuala['an']);
+                    echo "<li class='$class'> <span>".$promovabilitateAnuala['an']."</span> <span>".$promovabilitateAnuala['rata']."</span></li>";
+                  }
+                ?>
               </ul>
             </div>
           </div>
@@ -247,7 +263,7 @@
                 <div class="contact mb-2"><span class="fw-bold">Contact:</span> Prof. Andrei Ionescu <br> <span>robotics@cnshb.ro</span></div>
                 <div class="time"><span class="fw-bold">Program:</span> Marti & Joi, 15:00 - 17:00</div>
               </div>
-              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-3 heading-font">Vezi detalii</a>
+              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>
             </div>
           </div>
     
@@ -262,7 +278,7 @@
                 <div class="contact mb-2"><span class="fw-bold">Contact:</span> Prof. Macarie Piersica <br> <span>debate@cnshb.ro</span></div>
                 <div class="time"><span class="fw-bold">Program:</span> Miercuri, 13:00 - 14:30</div>
               </div>
-              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-3 heading-font">Vezi detalii</a>
+              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>
             </div>
           </div>
     
@@ -277,7 +293,7 @@
                 <div class="contact mb-2"><span class="fw-bold">Contact:</span> Prof. Grigore Grigorescu <br> <span>chess@cnshb.ro</span></div>
                 <div class="time"><span class="fw-bold">Program:</span> Luni & Joi, 14:00 - 16:00</div>
               </div>
-              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-3 heading-font">Vezi detalii</a>
+              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>
             </div>
           </div>
         </div>
@@ -298,7 +314,7 @@
                 <div class="coach"><span class="fw-bold">Antrenor:</span> Mihai Georgescu</div>
                 <div class="contact"><span class="fw-bold">Contact:</span> fotbal@cnshb.ro</div>
               </div>
-              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-3 heading-font">Vezi detalii</a>
+              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>
             </div>
           </div>
           <div class="col-12 col-lg-4 mb-3">
@@ -311,7 +327,7 @@
                 <div class="coach text-start"><span class="fw-bold">Antrenor:</span> Eustache Dumitrache</div>
                 <div class="contact text-start"><span class="fw-bold">Contact:</span> baschet@cnshb.ro</div>
               </div>
-              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-3 heading-font">Vezi detalii</a>
+              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>
             </div>
           </div>
           <div class="col-12 col-lg-4 mb-3">
@@ -324,7 +340,7 @@
                 <div class="coach text-start"><span class="fw-bold">Antrenor:</span> Eustache Dumitrache</div>
                 <div class="contact text-start"><span class="fw-bold">Contact:</span> baschet@cnshb.ro</div>
               </div>
-              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-3 heading-font">Vezi detalii</a>
+              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>
             </div>
           </div>
         </div>
@@ -337,15 +353,16 @@
         <div class="row align-items-center">
           <!-- Contact Information -->
           <div class="col-md-6">
-            <p>Email: contact@liceu.ro</p>
-            <p>Telefon: 021-xxxxxxx</p>
-            <p>Locație: Strada Exemplu, Nr. 10, București</p>
+            <p>Email: haretiana2012@hotmail.com</p>
+            <p>Telefon: 021 313 6462</p>
+            <p>Locație: Strada Italiană 17, București</p>
           </div>
           <!-- Google Maps Embed -->
           <div class="col-md-6">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2848.1543692037223!2d26.096306615535998!3d44.43533377910227!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff40f9a4b02b%3A0x8d051c1e3a4e013!2sBucharest!5e0!3m2!1sen!2sro!4v1631548285072!5m2!1sen!2sro" 
-              width="100%" height="200" style="border-radius: 10px; border:0;" allowfullscreen="" loading="lazy">
+              src=
+              <?php echo $highschoolData['locatie'] ?> 
+              width="100%" height="200" style="border-radius: 10px; border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
             </iframe>
           </div>
         </div>

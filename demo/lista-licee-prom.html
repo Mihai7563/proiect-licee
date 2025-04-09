@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Licee București</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+</head>
+<body class="body-font">
+    <!-- NAVBAR -->
+    <div class="nav-container bg-accent-1">
+    <nav class="container navbar navbar-expand-lg heading-font py-3">
+        <div class="container-fluid">
+            <!-- Logo Placeholder (Rectangular Box) -->
+            <div class="border border-5 border-black px-5 py-1 fs-5 fw-bold text-white heading-font">SIMP CITY</div>
+
+            <!-- Navbar Toggle Button -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-grey-1" href="home.html">Acasă</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-grey-1" href="#" data-bs-toggle="dropdown">Licee</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-grey-1" href="#">Recenzii</a>
+                    </li>
+                    <!-- Contact mobile -->
+                    <li class="nav-item d-lg-none">
+                        <a class="nav-link text-white" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Right-side Items -->
+            <div class="d-none d-lg-flex align-items-center">
+                <a class="nav-link mx-2 text-white" href="#">Login</a>
+                <a class="nav-link mx-2 d-none d-lg-block text-white" href="#">Contact</a>
+                <a class="nav-link mx-2 text-white" href="#"><i class="bi bi-search"></i></a>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <main class="school-list bg-cream py-5">
+        <h3 class="heading-font text-center pb-2">Lista liceelor după promovabilitatea la BAC</h3>
+        <!-- Buton de toggle filtre -->
+        <div class="text-center mb-3">
+            <button class="btn btn-outline-secondary rounded-pill px-4 py-2 heading-font" 
+                    type="button" 
+                    data-bs-toggle="collapse" 
+                    data-bs-target="#filtersCollapse" 
+                    aria-expanded="false" 
+                    aria-controls="filtersCollapse">
+                Vezi/Ascunde filtre
+            </button>
+        </div>
+    
+        <!-- Filtre (ascunse inițial) -->
+        <div class="collapse" id="filtersCollapse">
+            <div class="d-flex flex-wrap justify-content-center gap-3 pb-4">
+                <button class="btn bg-accent-2 text-white rounded-pill px-4 py-2 heading-font">Medie Admitere</button>
+                <button class="btn bg-accent-2 text-white rounded-pill px-4 py-2 heading-font">Olimpiade</button>
+                <button class="btn bg-accent-2 text-white rounded-pill px-4 py-2 heading-font">Locație</button>
+                <button class="btn bg-accent-2 text-white rounded-pill px-4 py-2 heading-font">Activități</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row gx-4 gy-4">
+                <div class="col-12 col-lg-6">
+                    <div class="card school-card border-0 rounded-4 overflow-hidden bg-white">
+                        <div class="row ps-3">
+                            <!-- Content -->
+                            <div class="col-md-7 p-3 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span>⭐⭐⭐⭐⭐</span>
+                                    </div>
+                                    <h5 class="heading-font text-color-heading-1">Colegiul Național „Spiru Haret”</h5>
+                                    <p class="text-color-heading-1 mb-1 border-bottom border-2">Sector 2, București</p>
+                                    <p class="mb-1 fs-5"><strong>Rata de Promovabilitate:</strong> 100%</p>
+                                    <p class="text-grey-2 mb-1"><strong>Medie Admitere:</strong> 9.75 (2024)</p>
+                                </div>
+                                <div>
+                                    <a class="btn bg-accent-3 text-white rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" href="http://localhost/proiect-licee/demo/prezentare-liceu.php?liceu=spiru-haret">Vezi detalii</a>
+                                </div>
+                            </div>
+                            <!-- Image -->
+                            <div class="col-md-5">
+                                <img src="https://cdn.edupedu.ro/wp-content/uploads/2019/01/dd76820962a4be1f0b8c06c61859ea34-e1548764256994.jpg" class="img-fluid h-100 object-fit-cover" alt="Liceu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="card school-card border-0 rounded-4 overflow-hidden bg-white">
+                        <div class="row ps-3">
+                            <!-- Content -->
+                            <div class="col-md-7 p-3 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span>⭐⭐⭐⭐⭐</span>
+                                    </div>
+                                    <h5 class="heading-font text-color-heading-1">Colegiul Național Grigore Moisil</h5>
+                                    <p class="text-color-heading-1 mb-1 border-bottom border-2">Sector 6, București</p>
+                                    <p class="mb-1 fs-5"><strong>Rata de Promovabilitate:</strong> 99.5%</p>
+                                    <p class="text-grey-2 mb-1"><strong>Medie Admitere:</strong> 9.17 (2024)</p>
+                                </div>
+                                <div>
+                                    <a class="btn bg-accent-3 text-white rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" href="http://localhost/proiect-licee/demo/prezentare-liceu.php?liceu=grigore-moisil">Vezi detalii</a>
+                                </div>
+                            </div>
+                            <!-- Image -->
+                            <div class="col-md-5">
+                                <img src="https://assets2.ghidul.ro/media/foto_video/6/160/15031/foto/crop/5748341.jpg" class="img-fluid h-100 object-fit-cover" alt="Liceu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="card school-card border-0 rounded-4 overflow-hidden bg-white">
+                        <div class="row ps-3">
+                            <!-- Content -->
+                            <div class="col-md-7 p-3 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span>⭐⭐⭐⭐</span>
+                                    </div>
+                                    <h5 class="heading-font text-color-heading-1">Colegiul Național Jean Monnet</h5>
+                                    <p class="text-color-heading-1 mb-1 border-bottom border-2">Sector 1, București</p>
+                                    <p class="mb-1 fs-5"><strong>Rata de Promovabilitate:</strong> 97.2%</p>
+                                    <p class="text-grey-2 mb-1"><strong>Medie Admitere:</strong> 8.80 (2024)</p>
+                                </div>
+                                <div>
+                                    <a class="btn bg-accent-3 text-white rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" href="http://localhost/proiect-licee/demo/prezentare-liceu.php?liceu=jean-monnet">Vezi detalii</a>
+                                </div>
+                            </div>
+                            <!-- Image -->
+                            <div class="col-md-5">
+                                <img src="https://cdn.edupedu.ro/wp-content/uploads/2021/12/Liceul-Jean-Monnet-Google-Earth.jpg" class="img-fluid h-100 object-fit-cover" alt="Liceu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <div class="card school-card border-0 rounded-4 overflow-hidden bg-white">
+                        <div class="row ps-3">
+                            <!-- Content -->
+                            <div class="col-md-7 p-3 d-flex flex-column justify-content-between">
+                                <div>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span>⭐⭐⭐⭐</span>
+                                    </div>
+                                    <h5 class="heading-font text-color-heading-1">Liceu Teoretic Eugen Lovinescu</h5>
+                                    <p class="text-color-heading-1 mb-1 border-bottom border-2">Sector 6, București</p>
+                                    <p class="mb-1 fs-5"><strong>Rata de Promovabilitate:</strong> 96.6%</p>
+                                    <p class="text-grey-2 mb-1"><strong>Medie Admitere:</strong> 8.12 (2024)</p>
+                                </div>
+                                <div>
+                                    <a class="btn bg-accent-3 text-white rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" href="http://localhost/proiect-licee/demo/prezentare-liceu.php?liceu=eugen-lovinescu">Vezi detalii</a>
+                                </div>
+                            </div>
+                            <!-- Image -->
+                            <div class="col-md-5">
+                                <img src="https://lh3.googleusercontent.com/proxy/yRwvGEW4OOq8EoD7nmWVwvExF9IyW80S4TAMEiavK9PEMwoC2gTpNjsJ0COpz5tXEZscRbyPSRiaud66pD0q5pK8ulki_3-ho1cRRsPpQrk" class="img-fluid h-100 object-fit-cover" alt="Liceu">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <footer class="bg-black text-white py-4">
+    <div class="container">
+        <div class="row">
+            <!-- Logo & Title -->
+            <div class="col-md-3">
+                <h4 class="fw-bold heading-font">SiteName</h4>
+                <p class="small">Informații relevante și actualizate.</p>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="col-md-3">
+                <h5 class="text-uppercase heading-font">Navigație</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light text-decoration-none">Acasă</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Despre</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Servicii</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact Info -->
+            <div class="col-md-3">
+                <h5 class="text-uppercase heading-font">Contact</h5>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-envelope"></i> contact@email.com</li>
+                    <li><i class="bi bi-telephone"></i> +40 123 456 789</li>
+                    <li><i class="bi bi-geo-alt"></i> București, România</li>
+                </ul>
+            </div>
+
+            <!-- Social Media Links -->
+            <div class="col-md-3">
+                <h5 class="text-uppercase heading-font">Urmărește-ne</h5>
+                <a href="#" class="text-light me-2 mb-2"><i class="bi bi-facebook"></i></a>
+                <a href="#" class="text-light me-2 mb-2"><i class="bi bi-instagram"></i></a>
+                <a href="#" class="text-light me-2 mb-2"><i class="bi bi-youtube"></i></a>
+                <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center mt-4">
+            <hr class="border-light">
+            <p class="small mb-0">&copy; 2025 SiteName. Toate drepturile rezervate.</p>
+        </div>
+    </div>
+</footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{
+    "denumire": "Liceul Teoretic Eugen Lovinescu",
+    "descriere": "<p>Liceul Teoretic „Eugen Lovinescu” se situează în rândul liceelor reprezentative ale Mun. București, fiind considerat drept o valoroasă instituție de învățământ preuniversitar. Este singura instituție de învățământ din București, și totodată, unul din cele trei licee din țară, unde se predă limba portugheză.</p> <p>Liceul Teoretic Eugen Lovinescu a fost fondat în anul 1990, preluând seriozitatea şi profesionalismul Şcolii Generale nr. 204. Pe băncile liceul au fost educate şi formate generaţii de intelectuali.</p>",
+    "imagine": " ",
+    "medieAdmitere" : [
+        {"an": 2024, "medie": 8.12},
+        {"an": 2023, "medie": 8.60},
+        {"an": 2022, "medie": 8.48},
+        {"an": 2021, "medie": 7.29},
+        {"an": 2020, "medie": 7.29}
+    ],
+
+  "promovabilitateBAC" : [
+        {"an": 2024, "rata": 96.6},
+        {"an": 2023, "rata": 96.4},
+        {"an": 2022, "rata": 92},
+        {"an": 2021, "rata": 84.7},
+        {"an": 2020, "rata": 84.9}
+    ],
+
+  "profiluri" : [ "MATE-INFO INTENSIV INFORMATICĂ",  "FILOLOGIE", "FILOLOGIE INTENSIV PORTUGHEZĂ", "FILOLOGIE BILINGV PORTUGHEZĂ", "FILOLOGIE INTENSIV ENGLEZĂ"],
+  "cluburi" : [],
+  "locatie" : "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13203.251070959184!2d26.019248604471922!3d44.4190563094688!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b200398fff3c1d%3A0x5f47c25026b2f0c!2sLiceul%20Teoretic%20Eugen%20Lovinescu!5e1!3m2!1sro!2sro!4v1744221037007!5m2!1sro!2sro"
+}
