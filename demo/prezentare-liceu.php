@@ -1,16 +1,11 @@
 <?php
-  $liceu = isset($_GET["liceu"]) ? $_GET["liceu"] : 'liceu-nespecificat'; 
-  $path = "assets/json/highschools/$liceu.json";
+  include "assets/php/connect.php";
+  include "assets/php/highschool.php";
 
-  if(!file_exists($path)){
-    http_response_code(404);
-    die();
-  }
-
-  $jsonString = file_get_contents($path);
-  $highschoolData = json_decode($jsonString, true);
+  $idLiceu = isset($_GET["liceu"]) ? $_GET["liceu"] : '0'; 
+  $highschoolData = getHighschoolData($idLiceu, $conn);
   // echo "<pre>";
-  // print_r($jsonData);
+  // print_r($highschoolData);
   // echo "</pre>";
 ?>
 
@@ -19,7 +14,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><?php echo $highschoolData['denumire'] ?> - prezentare liceu</title>
+    <title><?php echo $highschoolData['nume'] ?> - prezentare liceu</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -84,7 +79,7 @@
           </div>
         </div>
         <h1 class="heading-font text-color-heading-1 text-center">
-          <?php echo $highschoolData['denumire'] ?>
+          <?php echo $highschoolData['nume'] ?>
         </h1>
 
         <!-- Profiluri -->
@@ -108,10 +103,10 @@
               <h2 class="fs-5 mb-4 text-center heading-font text-color-heading-1 text-uppercase">Medie admitere</h2>
               <ul class="ps-0 mb-0">
                 <?php
-                  foreach($highschoolData["medieAdmitere"] as $index => $medieAnuala){
-                    $class = $index != sizeof($highschoolData["medieAdmitere"]) - 1 ? "d-flex justify-content-between py-2 border-bottom heading-font" : "d-flex justify-content-between py-2 heading-font";
+                  foreach($highschoolData["medie_admitere"] as $index => $medieAnuala){
+                    $class = $index != sizeof($highschoolData["medie_admitere"]) - 1 ? "d-flex justify-content-between py-2 border-bottom heading-font" : "d-flex justify-content-between py-2 heading-font";
                     // var_dump($medieAnuala['an']);
-                    echo "<li class='$class'> <span>".$medieAnuala['an']."</span> <span>".$medieAnuala['medie']."</span></li>";
+                    echo "<li class='$class'> <span>".$medieAnuala['an']."</span> <span>".number_format($medieAnuala['medie'], 2)."</span></li>";
                   }
                 ?>
                 <!-- <li class="d-flex justify-content-between py-2 border-bottom heading-font">
