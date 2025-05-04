@@ -1,12 +1,13 @@
 <?php
+  include "assets/php/_config.php";
   include "assets/php/connect.php";
   include "assets/php/highschool.php";
 
   $idLiceu = isset($_GET["liceu"]) ? $_GET["liceu"] : '0'; 
   $highschoolData = getHighschoolData($idLiceu, $conn);
-  // echo "<pre>";
-  // print_r($highschoolData);
-  // echo "</pre>";
+  echo "<pre>";
+  print_r($highschoolData);
+  echo "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +76,7 @@
             ⭐⭐⭐⭐⭐ <u>91 recenzii</u>
           </div>
           <div class="col-12 col-lg-6 text-lg-end heading-font">
-            RATĂ DE PROMOVABILITATE: 100%
+            RATĂ DE PROMOVABILITATE: <?php echo number_format($highschoolData['rata_promovabilitate_curenta'], 2)?> %
           </div>
         </div>
         <h1 class="heading-font text-color-heading-1 text-center">
@@ -87,15 +88,24 @@
           <?php
             foreach($highschoolData["profiluri"] as $index => $profil){
               $class = $index ? "px-2 border-start border-dark" : "px-2";
-              echo "<div class='$class'>$profil</div>";
+              echo "<div class='$class'>" . $profil['denumire'] . "</div>";
             }
           ?>
         </div>
       </div>
     </header>
-
-    <!-- STATS -->
+    
+    
     <div class="container">
+      <!-- DESCRIPTION -->
+      <section class="mb-5">
+        <!-- <h2 class="fs-3 heading-font text-color-heading-1 text-uppercase">Despre liceu</h2> -->
+        <p>
+          Colegiul Național Spiru Haret este cunoscut pentru excelența sa academică, având o rată de promovabilitate ridicată și elevi cu rezultate remarcabile la concursuri și olimpiade. Oferă un mediu educațional modern, cu diverse activități extracurriculare.
+        </p>
+      </section>
+
+      <!-- STATS -->
       <section class="mb-5">
         <div class="row">
           <div class="col-12 col-lg-6 mb-4">
@@ -132,10 +142,10 @@
               <h2 class="fs-5 mb-4 text-center heading-font text-color-heading-1 text-uppercase">Rata promovabilitate</h2>
               <ul class="ps-0 mb-0">
                 <?php
-                  foreach($highschoolData["promovabilitateBAC"] as $index => $promovabilitateAnuala){
-                    $class = $index != sizeof($highschoolData["promovabilitateBAC"]) - 1 ? "d-flex justify-content-between py-2 border-bottom heading-font" : "d-flex justify-content-between py-2 heading-font";
+                  foreach($highschoolData["rata_promovabilitate"] as $index => $promovabilitateAnuala){
+                    $class = $index != sizeof($highschoolData["rata_promovabilitate"]) - 1 ? "d-flex justify-content-between py-2 border-bottom heading-font" : "d-flex justify-content-between py-2 heading-font";
                     // var_dump($medieAnuala['an']);
-                    echo "<li class='$class'> <span>".$promovabilitateAnuala['an']."</span> <span>".$promovabilitateAnuala['rata']."</span></li>";
+                    echo "<li class='$class'> <span>" . $promovabilitateAnuala['an'] . "</span> <span>" . number_format($promovabilitateAnuala['procent_promovabilitate'], 2) . " %</span></li>";
                   }
                 ?>
               </ul>
@@ -236,64 +246,56 @@
         </div>
       </section>
       
-      <section class="mb-5">
-        <h2 class="fs-3 heading-font text-color-heading-1 text-uppercase">Despre liceu</h2>
-        <p>
-          Colegiul Național Spiru Haret este cunoscut pentru excelența sa academică, având o rată de promovabilitate ridicată și elevi cu rezultate remarcabile la concursuri și olimpiade. Oferă un mediu educațional modern, cu diverse activități extracurriculare.
-        </p>
-      </section>
+
 
       <!-- CLUBS AND ACTIVITIES -->
       <section class="mb-5">
-        <h2 class="fs-3 mb-3 heading-font text-color-heading-1 text-uppercase">Cluburi & activitati</h2>
+        <h2 class="fs-3 mb-3 heading-font text-color-heading-1 text-uppercase">Cluburi & activități</h2>
         <div class="row">
-          <!-- CARD -->
-          <div class="col-12 col-lg-4 mb-3">
-            <div class="card p-3 h-100 d-flex flex-col justify-content-between border-2">
-              <div class="details mb-3">
-                <div class="name fs-6 heading-font text-start text-uppercase">Robotica</div>
-                <div class="description text-start mb-2 text-b">Dezvoltam proiecte inovatoare si participam la concursuri nationale si internationale</div>
-              </div>
-              <div class="contact text-start mb-3">
-                <div class="contact mb-2"><span class="fw-bold">Contact:</span> Prof. Andrei Ionescu <br> <span>robotics@cnshb.ro</span></div>
-                <div class="time"><span class="fw-bold">Program:</span> Marti & Joi, 15:00 - 17:00</div>
-              </div>
-              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>
-            </div>
-          </div>
-    
-          <!-- CARD -->
-          <div class="col-12 col-lg-4 mb-3">
-            <div class="card p-3 h-100 d-flex flex-col justify-content-between border-2">
-              <div class="details mb-3">
-                <div class="name fs-6 heading-font text-start text-uppercase">Debate</div>
-                <div class="description text-start mb-2 text-b">Dezbatem subiecte de actualitate, dezvoltam abilitati de argumentare si public speaking</div>
-              </div>
-              <div class="contact text-start mb-3">
-                <div class="contact mb-2"><span class="fw-bold">Contact:</span> Prof. Macarie Piersica <br> <span>debate@cnshb.ro</span></div>
-                <div class="time"><span class="fw-bold">Program:</span> Miercuri, 13:00 - 14:30</div>
-              </div>
-              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>
-            </div>
-          </div>
-    
-          <!-- CARD -->
-          <div class="col-12 col-lg-4 mb-3">
-            <div class="card p-3 h-100 d-flex flex-col justify-content-between border-2">
-              <div class="details mb-3">
-                <div class="name fs-6 heading-font text-start text-uppercase">Sah</div>
-                <div class="description text-start mb-2 text-b">Invatam strategii de joc si participam la turnee interscolare</div>
-              </div>
-              <div class="contact text-start mb-3">
-                <div class="contact mb-2"><span class="fw-bold">Contact:</span> Prof. Grigore Grigorescu <br> <span>chess@cnshb.ro</span></div>
-                <div class="time"><span class="fw-bold">Program:</span> Luni & Joi, 14:00 - 16:00</div>
-              </div>
-              <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>
-            </div>
-          </div>
+          <?php
+          foreach ($highschoolData["cluburi"] as $club) {
+              echo '<div class="col-12 col-md-6 col-lg-4 mb-3">
+                      <div class="card p-3 h-100 d-flex flex-column justify-content-between border-2">';
+                      
+              // Details
+              echo '    <!-- Details -->
+                        <div class="details mb-3">
+                        <div class="name heading-font text-start">
+                            <div>
+                              <span class="badge bg-accent-3 text-white rounded-pill">' . $club["categorie"] . '</span>
+                            </div>
+                            <h3 class = "fs-5 text-uppercase fw-bold mt-3">' . $club["nume_club"] . '</h3>	
+                          </div>
+                          <div class="description text-start mb-2 text-b">'. $club["descriere_club"] . '</div>
+                        </div>';
+
+              // Contact
+              echo '    <!-- Contact -->
+                        <div class="contact text-start mb-3">
+                          <div class="contact mb-2">
+                            <div>
+                              <span class="fw-bold">Contact:</span> 
+                              '. $club["contact_nume"] . '
+                            </div>
+                            <div>
+                              <span>' . $club["contact_mail"] . '</span>
+                            </div>
+                          </div>
+                          <div class="time">
+                            <span class="fw-bold">Program:</span> 
+                            '. $club["program"] . '
+                          </div>
+                        </div>';
+
+              // Button
+              echo '    <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>';
+
+              echo '  </div>'; 
+              echo '</div>';
+          }
+          ?>
         </div>
-    </section>
-    
+      </section>
       
       <!-- SPORTS -->
       <section class="mb-5">
