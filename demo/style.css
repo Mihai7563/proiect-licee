@@ -35,6 +35,10 @@ body{
     color: var(--accent-1);
 }
 
+.text-accent-2{
+    color: var(--accent-2);
+}
+
 .text-accent-3{
     color: var(--accent-3);
 }
@@ -55,12 +59,24 @@ body{
     background-color: var(--primary);
 }
 
+.bg-s{
+    background-color: var(--secondary);
+}
+
+.bg-black-1{
+    background-color: var(--black-1);
+}
+
 .bg-white{
     background-color: var(--white-1);
 }
 
-.bg-s{
-    background-color: var(--secondary);
+.bg-grey-1{
+    background-color: var(--grey-1);
+}
+
+.bg-grey-2{
+    background-color: var(--grey-2);
 }
 
 .bg-accent-1 {
@@ -180,6 +196,14 @@ header, footer{
         position: relative;
         top: -364px;
     }
+
+    .highschool-search-bar{
+        width: 500px; 
+    }
+
+    .filter-menu{
+        width: 600px;
+    }
 }
 
 @media (max-width: 991px){
@@ -222,3 +246,6 @@ header, footer{
     background-position: center;
 }
 
+.filter-menu{
+    display: none;
+}
