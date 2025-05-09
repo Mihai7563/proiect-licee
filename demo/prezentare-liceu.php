@@ -30,44 +30,15 @@
 
      <!-- NAVBAR -->
      <div class="nav-container bg-accent-1">
-    <nav class="container navbar navbar-expand-lg heading-font py-3">
-        <div class="container-fluid">
-            <!-- Logo Placeholder (Rectangular Box) -->
-            <div class="border border-5 border-black px-5 py-1 fs-5 fw-bold text-white heading-font">SIMP CITY</div>
-
-            <!-- Navbar Toggle Button -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Navbar Items -->
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link text-grey-1" href="home.html">Acasă</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-grey-1" href="#" data-bs-toggle="dropdown">Licee</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-grey-1" href="#">Recenzii</a>
-                    </li>
-                    <!-- Contact mobile -->
-                    <li class="nav-item d-lg-none">
-                        <a class="nav-link text-white" href="#">Contact</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Right-side Items -->
-            <div class="d-none d-lg-flex align-items-center">
-                <a class="nav-link mx-2 text-white" href="#">Login</a>
-                <a class="nav-link mx-2 d-none d-lg-block text-white" href="#">Contact</a>
-                <a class="nav-link mx-2 text-white" href="#"><i class="bi bi-search"></i></a>
-            </div>
-        </div>
-    </nav>
-    </div>
+      <?php 
+          $containerClass = "backhground-accent-1";
+          $borderClass = "border-grey-1";
+          $textClass1 = "text-white";
+          $textClass2 = "text-grey-1";
+          include 'assets/php/navbar.php'; 
+          echo $navbar;
+        ?>
+      </div>
 
     <header class="mb-5">
       <div class="container my-3">
@@ -94,11 +65,10 @@
         </div>
       </div>
     </header>
-    
-    
+
     <div class="container">
       <!-- DESCRIPTION -->
-      <section class="mb-5">
+      <section class="mb-5 heading-font">
         <!-- <h2 class="fs-3 heading-font text-color-heading-1 text-uppercase">Despre liceu</h2> -->
         <p>
           Colegiul Național Spiru Haret este cunoscut pentru excelența sa academică, având o rată de promovabilitate ridicată și elevi cu rezultate remarcabile la concursuri și olimpiade. Oferă un mediu educațional modern, cu diverse activități extracurriculare.
@@ -288,7 +258,17 @@
                         </div>';
 
               // Button
-              echo '    <a type="button" class="btn bg-accent-2 text-white rounded-pill px-4 py-2 my-2 heading-font">Vezi detalii</a>';
+                echo '    <div class="social-media mt-3">
+                      <a href="#" target="_blank" class="me-2">
+                      <i class="bi bi-instagram fs-4 text-accent-2"></i>
+                      </a>
+                      <a href="#" target="_blank" class="me-2">
+                      <i class="bi bi-facebook fs-4 text-accent-2"></i>
+                      </a>
+                      <a href="#" target="_blank" class="me-2">
+                      <i class="bi bi-twitter fs-4 text-accent-2"></i>
+                      </a>
+                    </div>';
 
               echo '  </div>'; 
               echo '</div>';

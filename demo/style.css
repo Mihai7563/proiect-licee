@@ -35,6 +35,10 @@ body{
     color: var(--accent-1);
 }
 
+.border-grey-1{
+    border-color: var(--grey-1);
+}
+
 .text-accent-2{
     color: var(--accent-2);
 }
@@ -247,5 +251,9 @@ header, footer{
 }
 
 .filter-menu{
+    display: none;
+}
+
+.sort-menu{
     display: none;
 }

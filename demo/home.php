@@ -11,45 +11,10 @@
 </head>
 <body class="body-font">
   <!-- NAVBAR -->
-  <div class="nav-container">
-    <nav class="container navbar navbar-expand-lg heading-font py-3">
-      <div class="container-fluid">
-          <!-- Logo Placeholder (Rectangular Box) -->
-          <div class="border border-5 border-black px-5 py-1 fs-5 fw-bold heading-font">SIMP CITY</div>
-  
-          <!-- Navbar Toggle Button -->
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-              <span class="navbar-toggler-icon"></span>
-          </button>
-  
-          <!-- Navbar Items -->
-          <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-              <ul class="navbar-nav">
-                  <li class="nav-item">
-                      <a class="nav-link" href="home.html">Acasă</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Licee</a>
-                  </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="#">Vezi Harta</a>
-                  </li>
-                  <!-- Contact mobile -->
-                  <li class="nav-item d-lg-none">
-                      <a class="nav-link" href="#">Contact</a>
-                  </li>
-              </ul>
-          </div>
-  
-          <!-- Right-side Items -->
-          <div class="d-none d-lg-flex align-items-center">
-              <a class="nav-link mx-2" href="#">Login</a>
-              <a class="nav-link mx-2 d-none d-lg-block" href="#">Contact</a>
-              <a class="nav-link mx-2" href="#"><i class="bi bi-search"></i></a>
-          </div>
-      </div>
-    </nav>
-  </div>
+
+    <?php include 'assets/php/navbar.php'; 
+        echo $navbar;
+    ?>
 
 <!-- HERO SECTION -->
  <section>
