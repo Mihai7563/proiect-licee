@@ -5,6 +5,7 @@
   include "assets/php/transliteration.php";
 
   $highschoolsList = getHighschoolsList($conn);
+  $profilesList = getProfilesList($conn, true);
   $sortOption = isset($_GET['sort']) ? $_GET['sort'] : null;
 //   echo "<pre>";
 //   print_r($highschoolsList);
@@ -24,12 +25,15 @@
     <script src="assets/js/search-options-btns.js" defer></script>
     <script src="assets/js/highschool-search-bar.js" defer></script>
     <script src="assets/js/apply-sort.js" defer></script>
+    <script src="assets/js/apply-filter.js" defer></script>
+    <script src="assets/js/add-to-wishlist.js" defer></script>
+
 </head>
 <body class="body-font">
     <!-- NAVBAR -->
     <div class="nav-container bg-accent-1">
     <?php 
-        $containerClass = "backhground-accent-1";
+        $containerClass = "background-accent-1";
         $borderClass = "border-grey-1";
         $textClass1 = "text-white";
         $textClass2 = "text-grey-1";
@@ -85,6 +89,25 @@
                 <!-- PROFILES -->
                     <h6 class="mb-3 text-accent-3 heading-font">Profiluri</h6>
                     <div class="row">
+                        <?php 
+                            // echo '<pre>';
+                            // print_r(getProfilesList($conn, true));
+                            // echo '</pre>';
+                            foreach ($profilesList as $profileName => $profileData) {
+                                echo '<div class="col-md-6 mb-3">';
+                                echo '  <h6 class="mb-3 text-grey-2 heading-font">' . $profileName . '</h6>';
+                                foreach ($profileData as $profile) {
+                                    echo '  <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="cb-profile-' . $profile['id'] . '" value="' . $profile['denumire'] . '">
+                                                <label class="form-check-label text-grey-2 text-capitalize" for="cb-profile-' . $profile['id'] . '">' . mb_strtolower($profile['denumire']) . '</label>
+                                            </div>';
+                                }
+                                echo '</div>';
+                            }
+                        ?>
+                    </div>
+
+                    <!-- <div class="row">
                         <div class="col-md-6">
                             <h6 class="mb-3 text-grey-2 heading-font">Real</h6>
                             <div class="form-check">
@@ -129,7 +152,7 @@
                                 <label class="form-check-label text-grey-2" for="services">Servicii</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     
                     <div class="row">
@@ -181,18 +204,18 @@
                         <option>Sector 5</option>
                         <option>Sector 6</option>
                     </select>
-                    <button class="btn bg-accent-3 text-white w-100 rounded-pill heading-font">Aplică</button>
+                    <button class="apply-filters-btn btn bg-accent-3 text-white w-100 rounded-pill heading-font">Aplică</button>
                 </div>
             </div>
 
-            <!-- Mobile Fullscreen Filter -->
+            <!--    MOBILE FULSCREEN FILTER -->
             <div class="filter-menu-mobile d-lg-none position-fixed top-0 start-0 w-100 h-100 bg-white overflow-auto" id="filterMenuMobile" style="display: none; z-index: 1050; padding: 20px;">
                 <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
                     <h5 class="text-accent-3 heading-font mb-0">Filtrează</h5>
                     <button class="btn-close" id="closeFilterMenuMobile"></button>
                 </div>
                 <div class="accordion p-3" id="filterAccordion">
-                    <!-- Profiluri -->
+                    <!-- PROFILES -->
                     <div class="accordion-item border border-1 mb-4">
                         <h6 class="accordion-header heading-font fw-bold" id="headingProfiles">
                             <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProfiles" aria-expanded="false" aria-controls="collapseProfiles">
@@ -240,7 +263,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Cluburi -->
+                    <!-- CLUBS -->
                     <div class="accordion-item border border-1 mb-4">
                         <h6 class="accordion-header heading-font fw-bold" id="headingClubs">
                             <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClubs" aria-expanded="false" aria-controls="collapseClubs">
@@ -268,7 +291,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Program -->
+                    <!-- PROGRAM -->
                     <div class="accordion-item border border-1 mb-4">
                         <h6 class="accordion-header heading-font fw-bold" id="headingProgram">
                             <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProgram" aria-expanded="false" aria-controls="collapseProgram">
@@ -382,8 +405,8 @@
                     
                     
                     foreach ($highschoolsList as $highschool){
-                        echo '  <div class="col-12 col-lg-6">
-                                    <div class="card school-card border-0 rounded-4 overflow-hidden bg-white">
+                        echo '  <div class="school-card col-12 col-lg-6" data-profile="' . $highschool["profil"] .'">
+                                    <div class="card border-0 rounded-4 overflow-hidden bg-white">
                                         <div class="row ps-3">
                                             <!-- Content -->
                                             <div class="col-md-7 p-3 d-flex flex-column justify-content-between">
@@ -398,6 +421,16 @@
                                                 </div>
                                                 <div>
                                                     <a class="btn bg-accent-3 text-white rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" href="http://localhost/proiect-licee/demo/prezentare-liceu.php?liceu=' . $highschool["id"] . '">Vezi detalii</a>
+                                                    <button class="add-to-wishlist btn btn-outline-accent-3 rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" id="favoriteBtn" 
+                                                    data-highschool-name="' . $highschool["nume"]. '" 
+                                                    data-highschool-sector="' . $highschool["sector"]. '" 
+                                                    data-highschool-promovabilitate="' . $highschool["procent_promovabilitate"]. '" 
+                                                    data-highschool-last-year="' . $highschool["an_procent_promovabilitate"]. '" 
+                                                    data-highschool-medie="' . $highschool["medie"]. '"
+                                                    data-highschool-id="' . $highschool["id"]. '"
+                                                    data-highschool-img="' . $highschool["imagine"]. '">
+                                                        <i class="bi bi-heart"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                             <!-- Image -->
@@ -467,5 +500,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.27/dist/sweetalert2.all.min.js"></script>
 </body>
 </html>

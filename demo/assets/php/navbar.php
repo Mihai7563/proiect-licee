@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link '. $textClass2. ' " href="home.html">Acasă</a>
+                        <a class="nav-link '. $textClass2. ' " href="index.php">Acasă</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle ' . $textClass2 . ' " href="#" data-bs-toggle="dropdown">Licee</a>
@@ -36,7 +36,7 @@
 
             <!-- Right-side Items -->
             <div class="d-none d-lg-flex align-items-center">
-                <a class="nav-link mx-2 ' . $textClass1 . '" href="#">Login</a>
+                <a class="nav-link mx-2 ' . $textClass1 . '" href="favorite.php">Favorite</a>
                 <a class="nav-link mx-2 d-none d-lg-block ' . $textClass1 . '" href="#">Contact</a>
                 <a class="nav-link mx-2 ' . $textClass1 . '" href="#"><i class="bi bi-search"></i></a>
             </div>

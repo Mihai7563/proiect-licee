@@ -1,15 +1,19 @@
 const searchBar = document.querySelector('.highschool-search-bar');
 const schoolCards = document.querySelectorAll('.school-card');
 
+function normalizeString(str) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
 searchBar.addEventListener('input', function () {
-    const searchQuery = searchBar.value.toLowerCase();
+    const searchQuery = normalizeString(searchBar.value);
 
     schoolCards.forEach(card => {
-        const schoolName = card.querySelector('h5').textContent.toLowerCase();
+        const schoolName = normalizeString(card.querySelector('h5').textContent);
         if (schoolName.includes(searchQuery)) {
-            card.parentElement.style.display = 'block';
+            card.style.display = 'block';
         } else {
-            card.parentElement.style.display = 'none';
+            card.style.display = 'none';
         }
     });
 });

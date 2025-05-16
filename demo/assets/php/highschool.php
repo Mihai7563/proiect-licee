@@ -2,7 +2,11 @@
 
 function getHighschoolsList($conn){
     $query = "  SELECT 
-                    *
+                    *,
+                    (SELECT GROUP_CONCAT(`profiluri`.`denumire` SEPARATOR ', ') 
+                     FROM `profiluri_licee` 
+                     JOIN `profiluri` ON `profiluri_licee`.`id_profil` = `profiluri`.`id` 
+                     WHERE `profiluri_licee`.`id_liceu` = `licee`.`id`) AS 'profil'
                 FROM 
                     `licee` JOIN 
                     (
@@ -31,6 +35,29 @@ function getHighschoolsList($conn){
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+function getProfilesList($conn, $format = false){
+    $query = "  SELECT 
+                    `profiluri`.*,
+                    `categorii_profiluri`.`denumire` AS `categorie_profil`
+                FROM 
+                    `profiluri` JOIN 
+                    `categorii_profiluri` ON `profiluri`.`id_categorie_profiluri` = `categorii_profiluri`.`id`  
+                ORDER BY 
+                    `id_categorie_profiluri`, `profiluri`.`denumire`";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $queryData = $result->fetch_all(MYSQLI_ASSOC);
+    if(!$format){
+        return $queryData;
+    }
+    $formattedData = [];
+    foreach($queryData as $row){
+        $formattedData[$row["categorie_profil"]][] = $row;
+    }
+    return $formattedData;
+}
+
 function getHighschoolData($idLiceu, $conn){
     $stmt = $conn->prepare("SELECT * FROM `licee` WHERE id = ?");
     $stmt->bind_param("i", $idLiceu); // "i" = integer
@@ -38,9 +65,11 @@ function getHighschoolData($idLiceu, $conn){
     $result = $stmt->get_result();
     $highschoolData = $result->fetch_assoc(); // single row as associative array
     $highschoolData["medie_admitere"] = getHighschoolAdmissionScores($idLiceu, $conn);
+    $highschoolData["medie_admitere_curenta"] = $highschoolData["medie_admitere"][0]["medie"];
     $highschoolData["rata_promovabilitate"] = getHighschoolGraduationRate($idLiceu, $conn);
     $highschoolData["rata_promovabilitate_curenta"] = $highschoolData["rata_promovabilitate"][0]["procent_promovabilitate"];
     $highschoolData["profiluri"] = getHighschoolProfiles($idLiceu, $conn);
+    $highschoolData["acreditari"] = getHighschoolAcreditations($idLiceu, $conn);
     $highschoolData["cluburi"] = getHighschoolClubs($idLiceu, $conn);
     return $highschoolData;
 }
@@ -72,6 +101,24 @@ function getHighschoolProfiles($idLiceu, $conn){
                     `id_liceu` = ?
                 ORDER BY
                     `profiluri_licee`.`prioritate`";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $idLiceu); // "i" = integer
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getHighschoolAcreditations($idLiceu, $conn){
+    $query = "  SELECT
+                    `acreditari_licee`.`prioritate`,
+                    `acreditari`.`denumire`
+                FROM
+                    `acreditari_licee` JOIN 
+                    `acreditari` ON `acreditari_licee`.`id_acreditare` = `acreditari`.`id`	
+                WHERE
+                    `id_liceu` = ?
+                ORDER BY
+                    `acreditari_licee`.`prioritate`";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $idLiceu); // "i" = integer
     $stmt->execute();
