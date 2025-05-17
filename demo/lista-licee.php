@@ -57,319 +57,215 @@
                 </button>
                 <button class="btn bg-accent-2 text-white rounded-pill px-4 py-3 heading-font" id="filterBtn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-                <path d="M1.5 1.5a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 .39.812L10 7.293V13a1 1 0 0 1-1.447.894l-2-1A1 1 0 0 1 6 12V7.293L1.61 1.812A.5.5 0 0 1 1.5 1.5z"/>
+                    <path d="M1.5 1.5a.5.5 0 0 1 .5-.5h12a.5.5 0 0 1 .39.812L10 7.293V13a1 1 0 0 1-1.447.894l-2-1A1 1 0 0 1 6 12V7.293L1.61 1.812A.5.5 0 0 1 1.5 1.5z"/>
                 </svg>
                 </button>
             </div>
-            </div>
-            <!-- SORT OPTIONS -->
-            <div class="sort-menu card shadow-sm border-0 rounded-4" id="sortMenu">
-                <div class="card-body">
-                    <h6 class="mb-3 text-accent-3 heading-font">Ordonează după</h6>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sortOptions" value="medie_admitere">
-                        <label class="form-check-label text-grey-2" for="sortByAdmissionAverage">Medie Admitere</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sortOptions" value="procent_promovabilitate">
-                        <label class="form-check-label text-grey-2" for="sortByPassRate">Promovabilitate</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sortOptions" value="nume_az">
-                        <label class="form-check-label text-grey-2" for="sortByNameAZ">Nume (A-Z)</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sortOptions" value="nume_za">
-                        <label class="form-check-label text-grey-2" for="sortByNameZA">Nume (Z-A)</label>
-                    </div>
-                    <button class="btn bg-accent-3 text-white w-100 rounded-pill heading-font mt-3" onclick="applySort()">Aplică</button>
+        </div>
+        <!-- SORT OPTIONS -->
+        <div class="sort-menu card shadow-sm border-0 rounded-4" id="sortMenu">
+            <div class="card-body">
+                <h6 class="mb-3 text-accent-3 heading-font">Ordonează după</h6>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sortOptions" value="medie_admitere" id="sortByAdmissionAverage">
+                    <label class="form-check-label text-grey-2" for="sortByAdmissionAverage">Medie Admitere</label>
                 </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sortOptions" value="procent_promovabilitate" id="sortByPassRate">
+                    <label class="form-check-label text-grey-2" for="sortByPassRate">Promovabilitate</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sortOptions" value="nume_az" id="sortByNameAZ">
+                    <label class="form-check-label text-grey-2" for="sortByNameAZ">Nume (A-Z)</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sortOptions" value="nume_za" id="sortByNameZA">
+                    <label class="form-check-label text-grey-2" for="sortByNameZA">Nume (Z-A)</label>
+                </div>
+                <button class="btn bg-accent-3 text-white w-100 rounded-pill heading-font mt-3" onclick="applySort()">Aplică</button>
             </div>
-            <!-- FILTER OPTIONS -->
-            <div class="filter-menu card shadow-sm border-0 rounded-4" id="filterMenu">
-                <div class="card-body">
+        </div>
+        <!-- FILTER OPTIONS -->
+        <div class="filter-menu card shadow-sm border-0 rounded-4" id="filterMenu">
+            <div class="card-body">
                 <!-- PROFILES -->
-                    <h6 class="mb-3 text-accent-3 heading-font">Profiluri</h6>
-                    <div class="row">
+                <h6 class="mb-3 text-accent-3 heading-font">Profiluri</h6>
+                <div class="row">
+                    <?php 
+                        foreach ($profilesList as $profileName => $profileData) {
+                        echo '<div class="col-md-6 mb-3">';
+                        echo '  <h6 class="mb-3 text-grey-2 heading-font">' . $profileName . '</h6>';
+                        foreach ($profileData as $profile) {
+                            echo '  <div class="form-check">
+                                <input class="form-check-input" type="checkbox" data-filter-type="profil" id="cb-profile-' . $profile['id'] . '" value="' . $profile['denumire'] . '">
+                                <label class="form-check-label text-grey-2 text-capitalize" for="cb-profile-' . $profile['id'] . '">' . mb_strtolower($profile['denumire']) . '</label>
+                                </div>';
+                        }
+                        echo '</div>';
+                        }
+                    ?>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <h6 class="mt-4 text-accent-3 heading-font">Cluburi</h6>
                         <?php 
-                            // echo '<pre>';
-                            // print_r(getProfilesList($conn, true));
-                            // echo '</pre>';
-                            foreach ($profilesList as $profileName => $profileData) {
-                                echo '<div class="col-md-6 mb-3">';
-                                echo '  <h6 class="mb-3 text-grey-2 heading-font">' . $profileName . '</h6>';
-                                foreach ($profileData as $profile) {
-                                    echo '  <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" data-filter-type="profil" id="cb-profile-' . $profile['id'] . '" value="' . $profile['denumire'] . '">
-                                                <label class="form-check-label text-grey-2 text-capitalize" for="cb-profile-' . $profile['id'] . '">' . mb_strtolower($profile['denumire']) . '</label>
-                                            </div>';
-                                }
-                                echo '</div>';
-                            }
+                        foreach ($clubCategories as $category) {
+                            echo '<div class="form-check">
+                                <input class="form-check-input" type="checkbox" data-filter-type="club" id="cb-club-' . $category['id'] . '" value="' . $category['denumire'] . '">
+                                <label class="form-check-label text-grey-2" for="cb-club-' . $category['id'] . '">' . $category['denumire'] . '</label>
+                            </div>';
+                        }
                         ?>
                     </div>
-
-                    <!-- <div class="row">
-                        <div class="col-md-6">
-                            <h6 class="mb-3 text-grey-2 heading-font">Real</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="naturalSciences">
-                                <label class="form-check-label text-grey-2" for="naturalSciences">Științele Naturii</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="mathInfo">
-                                <label class="form-check-label text-grey-2" for="mathInfo">Matematică-Informatică</label>
+                    <div class="col-md-6">
+                        <h6 class="mt-4 text-accent-3 heading-font">Program</h6>
+                        <?php
+                            foreach ($programsList as $program) {
+                                echo '  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" data-filter-type="program" id="cb-program-' . $program['id'] . '" value="' . $program['denumire'] . '">
+                                    <label class="form-check-label text-grey-2" for="cb-program-' . $program['id'] . '">' . $program['denumire'] . '</label>
+                                    </div>';   
+                            } 
+                        ?>
+                    </div>
+                </div>
+                <h6 class="mt-4 text-accent-3 heading-font">Medie Admitere</h6>
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <input type="number" class="form-control border-0 border-bottom px-3 py-2" id="minAverage" placeholder="Minim" min="1" max="10" step="0.01">
+                    <span>-</span>
+                    <input type="number" class="form-control border-0 border-bottom px-3 py-2" id="maxAverage" placeholder="Maxim" min="1" max="10" step="0.01">
+                </div>
+                <h6 class="mt-4 text-accent-3 heading-font">Sector</h6>
+                <div class="mb-3">
+                    <select class="form-select text-grey-2 border-0 rounded-pill bg-grey-1" data-filter-type="sector" id="sectorSelect">
+                        <option value="">Toate</option>
+                        <option value="1">Sector 1</option>
+                        <option value="2">Sector 2</option>
+                        <option value="3">Sector 3</option>
+                        <option value="4">Sector 4</option>
+                        <option value="5">Sector 5</option>
+                        <option value="6">Sector 6</option>
+                    </select>
+                </div>
+                <button class="apply-filters-btn btn bg-accent-3 text-white w-100 rounded-pill heading-font">Aplică</button>
+            </div>
+        </div>
+        <!--    MOBILE FULSCREEN FILTER -->
+        <div class="filter-menu-mobile d-lg-none position-fixed top-0 start-0 w-100 h-100 bg-white overflow-auto" id="filterMenuMobile" style="display: none; z-index: 1050; padding: 20px;">
+            <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
+                <h5 class="text-accent-3 heading-font mb-0">Filtrează</h5>
+                <button class="btn-close" id="closeFilterMenuMobile"></button>
+            </div>
+            <div class="accordion p-3" id="filterAccordion">
+                <!-- PROFILES -->
+                <div class="accordion-item border border-1 mb-4">
+                        <h6 class="accordion-header heading-font fw-bold" id="headingProfiles">
+                            <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProfiles" aria-expanded="false" aria-controls="collapseProfiles">
+                            Profiluri
+                            </button>
+                        </h6>
+                    <div id="collapseProfiles" class="accordion-collapse collapse" aria-labelledby="headingProfiles" data-bs-parent="#filterAccordion">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <?php 
+                                foreach ($profilesList as $profileName => $profileData) {
+                                    echo '<div class="col-12 mb-2">';
+                                    echo '  <h6 class="mb-2 text-grey-2 heading-font">' . $profileName . '</h6>';
+                                    foreach ($profileData as $profile) {
+                                    echo '  <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" data-filter-type="profil" id="mobile-cb-profile-' . $profile['id'] . '" value="' . $profile['denumire'] . '">
+                                            <label class="form-check-label text-grey-2 text-capitalize" for="mobile-cb-profile-' . $profile['id'] . '">' . mb_strtolower($profile['denumire']) . '</label>
+                                        </div>';
+                                    }
+                                    echo '</div>';
+                                }
+                                ?>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <h6 class="mb-3 text-grey-2 heading-font">Uman</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="philology">
-                                <label class="form-check-label text-grey-2" for="philology">Filologie</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="socialSciences">
-                                <label class="form-check-label text-grey-2" for="socialSciences">Științe Sociale</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 class="mb-3 text-grey-2 heading-font">Vocațional</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="arts">
-                                <label class="form-check-label text-grey-2" for="arts">Arte</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sports">
-                                <label class="form-check-label text-grey-2" for="sports">Sport</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h6 class="mb-3 text-grey-2 heading-font">Tehnologic</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="technical">
-                                <label class="form-check-label text-grey-2" for="technical">Tehnic</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="services">
-                                <label class="form-check-label text-grey-2" for="services">Servicii</label>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    
-                    <div class="row">
-                        <div class="col-md-6 col-12">
-                            <h6 class="mt-4 text-accent-3 heading-font">Cluburi</h6>
+                    </div>
+                </div>
+                <!-- CLUBS -->
+                <div class="accordion-item border border-1 mb-4">
+                    <h6 class="accordion-header heading-font fw-bold" id="headingClubs">
+                        <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClubs" aria-expanded="false" aria-controls="collapseClubs">
+                        Cluburi
+                        </button>
+                    </h6>
+                    <div id="collapseClubs" class="accordion-collapse collapse" aria-labelledby="headingClubs" data-bs-parent="#filterAccordion">
+                        <div class="accordion-body">
                             <?php 
                                 foreach ($clubCategories as $category) {
-                                    echo '<div class="form-check">
-                                            <input class="form-check-input" type="checkbox" data-filter-type="club" id="cb-club-' . $category['id'] . '" value="' . $category['denumire'] . '">
-                                            <label class="form-check-label text-grey-2" for="cb-club-' . $category['id'] . '">' . $category['denumire'] . '</label>
+                                echo '<div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" data-filter-type="club" id="mobile-cb-club-' . $category['id'] . '" value="' . $category['denumire'] . '">
+                                    <label class="form-check-label text-grey-2" for="mobile-cb-club-' . $category['id'] . '">' . $category['denumire'] . '</label>
+                                </div>';
+                                }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <!-- PROGRAM -->
+                <div class="accordion-item border border-1 mb-4">
+                    <h6 class="accordion-header heading-font fw-bold" id="headingProgram">
+                        <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProgram" aria-expanded="false" aria-controls="collapseProgram">
+                        Program
+                        </button>
+                    </h6>
+                    <div id="collapseProgram" class="accordion-collapse collapse" aria-labelledby="headingProgram" data-bs-parent="#filterAccordion">
+                        <div class="accordion-body">
+                            <?php
+                                foreach ($programsList as $program) {
+                                echo '<div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" data-filter-type="program" id="mobile-cb-program-' . $program['id'] . '" value="' . $program['denumire'] . '">
+                                    <label class="form-check-label text-grey-2" for="mobile-cb-program-' . $program['id'] . '">' . $program['denumire'] . '</label>
                                     </div>';
                                 }
                             ?>
                         </div>
-                        <div class="col-md-6">
-                            <h6 class="mt-4 text-accent-3 heading-font">Program</h6>
-                            <?php
-                                foreach ($programsList as $program) {
-                                    echo '  <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" data-filter-type="program" id="cb-program-' . $program['id'] . '" value="' . $program['denumire'] . '">
-                                                <label class="form-check-label text-grey-2" for="cb-program-' . $program['id'] . '">' . $program['denumire'] . '</label>
-                                            </div>';   
-                                } 
-                            ?>
-                        </div>
                     </div>
-                    
-                    <h6 class="mt-4 text-accent-3 heading-font">Medie Admitere</h6>
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <input type="number" class="form-control border-0 border-bottom px-3 py-2" id="minAverage" placeholder="Minim" min="1" max="10" step="0.01">
-                        <span>-</span>
-                        <input type="number" class="form-control border-0 border-bottom px-3 py-2" id="maxAverage" placeholder="Maxim" min="1" max="10" step="0.01">
-                    </div>
-
-                    <h6 class="mt-4 text-accent-3 heading-font">Sector</h6>
-                    <div class="mb-3">
-                        <select class="form-select text-grey-2 border-0 rounded-pill bg-grey-1" data-filter-type="sector" id="sectorSelect">
-                            <option value="">Toate</option>
-                            <option value="1">Sector 1</option>
-                            <option value="2">Sector 2</option>
-                            <option value="3">Sector 3</option>
-                            <option value="4">Sector 4</option>
-                            <option value="5">Sector 5</option>
-                            <option value="6">Sector 6</option>
-                        </select>
-                    </div>
-                    <button class="apply-filters-btn btn bg-accent-3 text-white w-100 rounded-pill heading-font">Aplică</button>
                 </div>
-            </div>
-
-            <!--    MOBILE FULSCREEN FILTER -->
-            <div class="filter-menu-mobile d-lg-none position-fixed top-0 start-0 w-100 h-100 bg-white overflow-auto" id="filterMenuMobile" style="display: none; z-index: 1050; padding: 20px;">
-                <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-                    <h5 class="text-accent-3 heading-font mb-0">Filtrează</h5>
-                    <button class="btn-close" id="closeFilterMenuMobile"></button>
-                </div>
-                <div class="accordion p-3" id="filterAccordion">
-                    <!-- PROFILES -->
-                    <div class="accordion-item border border-1 mb-4">
-                        <h6 class="accordion-header heading-font fw-bold" id="headingProfiles">
-                            <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProfiles" aria-expanded="false" aria-controls="collapseProfiles">
-                                Profiluri
-                            </button>
-                        </h6>
-                        <div id="collapseProfiles" class="accordion-collapse collapse" aria-labelledby="headingProfiles" data-bs-parent="#filterAccordion">
-                            <div class="accordion-body">
-                                <h6 class="mb-3 text-grey-2 heading-font">Real</h6>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileNaturalSciences">
-                                    <label class="form-check-label text-grey-2" for="mobileNaturalSciences">Științele Naturii</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileMathInfo">
-                                    <label class="form-check-label text-grey-2" for="mobileMathInfo">Matematică-Informatică</label>
-                                </div>
-                                <h6 class="mt-4 text-grey-2 heading-font">Uman</h6>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobilePhilology">
-                                    <label class="form-check-label text-grey-2" for="mobilePhilology">Filologie</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileSocialSciences">
-                                    <label class="form-check-label text-grey-2" for="mobileSocialSciences">Științe Sociale</label>
-                                </div>
-                                <h6 class="mt-4 text-grey-2 heading-font">Vocațional</h6>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileArts">
-                                    <label class="form-check-label text-grey-2" for="mobileArts">Arte</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileSports">
-                                    <label class="form-check-label text-grey-2" for="mobileSports">Sport</label>
-                                </div>
-                                <h6 class="mt-4 text-grey-2 heading-font">Tehnologic</h6>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileTechnical">
-                                    <label class="form-check-label text-grey-2" for="mobileTechnical">Tehnic</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileServices">
-                                    <label class="form-check-label text-grey-2" for="mobileServices">Servicii</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- CLUBS -->
-                    <div class="accordion-item border border-1 mb-4">
-                        <h6 class="accordion-header heading-font fw-bold" id="headingClubs">
-                            <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClubs" aria-expanded="false" aria-controls="collapseClubs">
-                                Cluburi
-                            </button>
-                        </h6>
-                        <div id="collapseClubs" class="accordion-collapse collapse" aria-labelledby="headingClubs" data-bs-parent="#filterAccordion">
-                            <div class="accordion-body">
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileTechAndScience">
-                                    <label class="form-check-label text-grey-2" for="mobileTechAndScience">Tehnologie & Științe</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileArt">
-                                    <label class="form-check-label text-grey-2" for="mobileArt">Artă</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileHumanities">
-                                    <label class="form-check-label text-grey-2" for="mobileHumanities">Profil Uman</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileSportsClub">
-                                    <label class="form-check-label text-grey-2" for="mobileSportsClub">Sport</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- PROGRAM -->
-                    <div class="accordion-item border border-1 mb-4">
-                        <h6 class="accordion-header heading-font fw-bold" id="headingProgram">
-                            <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseProgram" aria-expanded="false" aria-controls="collapseProgram">
-                                Program
-                            </button>
-                        </h6>
-                        <div id="collapseProgram" class="accordion-collapse collapse" aria-labelledby="headingProgram" data-bs-parent="#filterAccordion">
-                            <div class="accordion-body">
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileMorningProgram">
-                                    <label class="form-check-label text-grey-2" for="mobileMorningProgram">Doar dimineața</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileAfternoonProgram">
-                                    <label class="form-check-label text-grey-2" for="mobileAfternoonProgram">Doar după-amiaza</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="mobileMixedProgram">
-                                    <label class="form-check-label text-grey-2" for="mobileMixedProgram">Mixt</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Medie Admitere -->
-                    <div class="accordion-item border border-1 mb-4">
-                        <h6 class="accordion-header heading-font fw-bold" id="headingAdmissionAverage">
-                            <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdmissionAverage" aria-expanded="false" aria-controls="collapseAdmissionAverage">
-                                Medie Admitere
-                            </button>
-                        </h6>
-                        <div id="collapseAdmissionAverage" class="accordion-collapse collapse" aria-labelledby="headingAdmissionAverage" data-bs-parent="#filterAccordion">
-                            <div class="accordion-body">
-                                <div class="d-flex align-items-center gap-2">
-                                    <input type="number" class="form-control rounded-pill px-3 py-2" id="minAverage" placeholder="Minim" min="1" max="10" step="0.01">
-                                    <span>-</span>
-                                    <input type="number" class="form-control rounded-pill px-3 py-2" id="maxAverage" placeholder="Maxim" min="1" max="10" step="0.01">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Sector -->
-                    <div class="accordion-item border border-1 mb-4">
-                        <h6 class="accordion-header heading-font fw-bold" id="headingSector">
-                            <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSector" aria-expanded="false" aria-controls="collapseSector">
-                                Sector
-                            </button>
-                        </h6>
-                        <div id="collapseSector" class="accordion-collapse collapse" aria-labelledby="headingSector" data-bs-parent="#filterAccordion">
-                            <div class="accordion-body">
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="sector1">
-                                    <label class="form-check-label text-grey-2" for="sector1">Sector 1</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="sector2">
-                                    <label class="form-check-label text-grey-2" for="sector2">Sector 2</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="sector3">
-                                    <label class="form-check-label text-grey-2" for="sector3">Sector 3</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="sector4">
-                                    <label class="form-check-label text-grey-2" for="sector4">Sector 4</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="sector5">
-                                    <label class="form-check-label text-grey-2" for="sector5">Sector 5</label>
-                                </div>
-                                <div class="form-check mb-2">
-                                    <input class="form-check-input" type="checkbox" id="sector6">
-                                    <label class="form-check-label text-grey-2" for="sector6">Sector 6</label>
-                                </div>
+                <!-- Medie Admitere -->
+                <div class="accordion-item border border-1 mb-4">
+                    <h6 class="accordion-header heading-font fw-bold" id="headingAdmissionAverage">
+                        <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdmissionAverage" aria-expanded="false" aria-controls="collapseAdmissionAverage">
+                        Medie Admitere
+                        </button>
+                    </h6>
+                    <div id="collapseAdmissionAverage" class="accordion-collapse collapse" aria-labelledby="headingAdmissionAverage" data-bs-parent="#filterAccordion">
+                        <div class="accordion-body">
+                            <div class="d-flex align-items-center gap-2">
+                                <input type="number" class="form-control rounded-pill px-3 py-2" id="minAverageMobile" placeholder="Minim" min="1" max="10" step="0.01">
+                                <span>-</span>
+                                <input type="number" class="form-control rounded-pill px-3 py-2" id="maxAverageMobile" placeholder="Maxim" min="1" max="10" step="0.01">
                             </div>
                         </div>
                     </div>
                 </div>
-                <button class="btn bg-accent-3 text-white w-100 rounded-pill heading-font mt-3 py-3">Aplică Filtre</button>
+                <!-- Sector -->
+                <div class="accordion-item border border-1 mb-4">
+                    <h6 class="accordion-header heading-font fw-bold" id="headingSector">
+                        <button class="accordion-button collapsed heading-font fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSector" aria-expanded="false" aria-controls="collapseSector">
+                        Sector
+                        </button>
+                    </h6>
+                    <div id="collapseSector" class="accordion-collapse collapse" aria-labelledby="headingSector" data-bs-parent="#filterAccordion">
+                        <div class="accordion-body">
+                            <select class="form-select text-grey-2 border-0 rounded-pill bg-grey-1" data-filter-type="sector" id="sectorSelectMobile">
+                                <option value="">Toate</option>
+                                <option value="1">Sector 1</option>
+                                <option value="2">Sector 2</option>
+                                <option value="3">Sector 3</option>
+                                <option value="4">Sector 4</option>
+                                <option value="5">Sector 5</option>
+                                <option value="6">Sector 6</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
-            </div>
+            <button class="apply-filters-btn-mobile btn bg-accent-3 text-white w-100 rounded-pill heading-font mt-3 py-3">Aplică Filtre</button>
         </div>
+    </div>
 
         <!-- FILTERS -->
         <!-- <div class="collapse" id="filtersCollapse">

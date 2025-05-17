@@ -44,4 +44,9 @@ document.getElementById('closeFilterMenuMobile').addEventListener('click', () =>
 
 checkLargeScreen();
 
+document.querySelector('.apply-filters-btn-mobile').addEventListener('click', () => {filterMenuMobile.style.display = filterMenuMobile.style.display == 'block' ? 'none' : 'block';
+});
+document.querySelector('.apply-filters-btn').addEventListener('click', () => {filterMenu.style.display = filterMenu.style.display == 'block' ? 'none' : 'block';
+});
+
 window.addEventListener('resize', checkLargeScreen);
