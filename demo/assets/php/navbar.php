@@ -21,8 +21,8 @@
                     <li class="nav-item">
                         <a class="nav-link '. $textClass2. ' " href="index.php">Acasă</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle ' . $textClass2 . ' " href="#" data-bs-toggle="dropdown">Licee</a>
+                    <li class="nav-item">
+                        <a class="nav-link ' . $textClass2 . '" href="lista-licee.php">Licee</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link ' . $textClass2 . ' " href="#">Vezi Harta</a>

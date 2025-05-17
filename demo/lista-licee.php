@@ -6,6 +6,8 @@
 
   $highschoolsList = getHighschoolsList($conn);
   $profilesList = getProfilesList($conn, true);
+  $clubCategories = getClubCategories($conn);
+  $programsList = getProgramsList($conn);
   $sortOption = isset($_GET['sort']) ? $_GET['sort'] : null;
 //   echo "<pre>";
 //   print_r($highschoolsList);
@@ -98,7 +100,7 @@
                                 echo '  <h6 class="mb-3 text-grey-2 heading-font">' . $profileName . '</h6>';
                                 foreach ($profileData as $profile) {
                                     echo '  <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="cb-profile-' . $profile['id'] . '" value="' . $profile['denumire'] . '">
+                                                <input class="form-check-input" type="checkbox" data-filter-type="profil" id="cb-profile-' . $profile['id'] . '" value="' . $profile['denumire'] . '">
                                                 <label class="form-check-label text-grey-2 text-capitalize" for="cb-profile-' . $profile['id'] . '">' . mb_strtolower($profile['denumire']) . '</label>
                                             </div>';
                                 }
@@ -158,33 +160,25 @@
                     <div class="row">
                         <div class="col-md-6 col-12">
                             <h6 class="mt-4 text-accent-3 heading-font">Cluburi</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="techAndScience">
-                                <label class="form-check-label text-grey-2" for="techAndScience">Tehnologie & Stiinte</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="art">
-                                <label class="form-check-label text-grey-2" for="art">Arta</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="humanities">
-                                <label class="form-check-label text-grey-2" for="humanities">Profil Uman</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sports">
-                                <label class="form-check-label text-grey-2" for="sports">Sport</label>
-                            </div>
+                            <?php 
+                                foreach ($clubCategories as $category) {
+                                    echo '<div class="form-check">
+                                            <input class="form-check-input" type="checkbox" data-filter-type="club" id="cb-club-' . $category['id'] . '" value="' . $category['denumire'] . '">
+                                            <label class="form-check-label text-grey-2" for="cb-club-' . $category['id'] . '">' . $category['denumire'] . '</label>
+                                    </div>';
+                                }
+                            ?>
                         </div>
                         <div class="col-md-6">
                             <h6 class="mt-4 text-accent-3 heading-font">Program</h6>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="morningProgram">
-                                <label class="form-check-label text-grey-2" for="morningProgram">Dimineața</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="afternoonProgram">
-                                <label class="form-check-label text-grey-2" for="afternoonProgram">După-amiaza</label>
-                            </div>
+                            <?php
+                                foreach ($programsList as $program) {
+                                    echo '  <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" data-filter-type="program" id="cb-program-' . $program['id'] . '" value="' . $program['denumire'] . '">
+                                                <label class="form-check-label text-grey-2" for="cb-program-' . $program['id'] . '">' . $program['denumire'] . '</label>
+                                            </div>';   
+                                } 
+                            ?>
                         </div>
                     </div>
                     
@@ -196,14 +190,17 @@
                     </div>
 
                     <h6 class="mt-4 text-accent-3 heading-font">Sector</h6>
-                    <select class="form-select mb-3 text-grey-2 border-0 rounded-pill bg-grey-1">
-                        <option>Sector 1</option>
-                        <option>Sector 2</option>
-                        <option>Sector 3</option>
-                        <option>Sector 4</option>
-                        <option>Sector 5</option>
-                        <option>Sector 6</option>
-                    </select>
+                    <div class="mb-3">
+                        <select class="form-select text-grey-2 border-0 rounded-pill bg-grey-1" data-filter-type="sector" id="sectorSelect">
+                            <option value="">Toate</option>
+                            <option value="1">Sector 1</option>
+                            <option value="2">Sector 2</option>
+                            <option value="3">Sector 3</option>
+                            <option value="4">Sector 4</option>
+                            <option value="5">Sector 5</option>
+                            <option value="6">Sector 6</option>
+                        </select>
+                    </div>
                     <button class="apply-filters-btn btn bg-accent-3 text-white w-100 rounded-pill heading-font">Aplică</button>
                 </div>
             </div>
@@ -405,42 +402,44 @@
                     
                     
                     foreach ($highschoolsList as $highschool){
-                        echo '  <div class="school-card col-12 col-lg-6" data-profile="' . $highschool["profil"] .'">
-                                    <div class="card border-0 rounded-4 overflow-hidden bg-white">
-                                        <div class="row ps-3">
-                                            <!-- Content -->
-                                            <div class="col-md-7 p-3 d-flex flex-column justify-content-between">
-                                                <div>
-                                                    <div class="d-flex align-items-center mb-2">
-                                                        <span>⭐⭐⭐⭐⭐</span>
-                                                    </div>
-                                                    <h5 class="heading-font text-color-heading-1">' . $highschool["nume"] . '</h5>
-                                                    <p class="text-color-heading-1 mb-1 border-bottom border-2"> Sector ' . $highschool["sector"] . ', București</p>
-                                                    <p class="mb-1 fs-5"><strong>Rata de Promovabilitate:</strong> ' . $highschool["procent_promovabilitate"] . '% (' . $highschool["an_procent_promovabilitate"] . ')</p>
-                                                    <p class="text-grey-2 mb-1"><strong>Medie Admitere:</strong> ' . $highschool["medie"] . ' (' . $highschool["an_medie_admitere"] . ')</p>
+                        echo '<div class="school-card col-12 col-lg-6" data-profile="' . $highschool["profil"] . '" data-categorii-cluburi="' . $highschool["categorii_cluburi"] . '" data-program="' . $highschool["program"] . '" data-sector="' . $highschool["sector"] . '" data-medie-admitere="' . $highschool["medie"] . '">
+                                <div class="card border-0 rounded-4 overflow-hidden bg-white h-100 d-flex flex-column">
+                                    <div class="row g-0 h-100">
+                                        <!-- Content -->
+                                        <div class="col-md-7 p-3 d-flex flex-column justify-content-between">
+                                            <div>
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <span>⭐⭐⭐⭐⭐</span>
                                                 </div>
-                                                <div>
-                                                    <a class="btn bg-accent-3 text-white rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" href="http://localhost/proiect-licee/demo/prezentare-liceu.php?liceu=' . $highschool["id"] . '">Vezi detalii</a>
-                                                    <button class="add-to-wishlist btn btn-outline-accent-3 rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" id="favoriteBtn" 
-                                                    data-highschool-name="' . $highschool["nume"]. '" 
-                                                    data-highschool-sector="' . $highschool["sector"]. '" 
-                                                    data-highschool-promovabilitate="' . $highschool["procent_promovabilitate"]. '" 
-                                                    data-highschool-last-year="' . $highschool["an_procent_promovabilitate"]. '" 
-                                                    data-highschool-medie="' . $highschool["medie"]. '"
-                                                    data-highschool-id="' . $highschool["id"]. '"
-                                                    data-highschool-img="' . $highschool["imagine"]. '">
-                                                        <i class="bi bi-heart"></i>
-                                                    </button>
-                                                </div>
+                                                <h5 class="heading-font text-color-heading-1">' . $highschool["nume"] . '</h5>
+                                                <p class="text-color-heading-1 mb-1 border-bottom border-2"> Sector ' . $highschool["sector"] . ', București</p>
+                                                <p class="mb-1 fs-5"><strong>Rata de Promovabilitate:</strong> ' . $highschool["procent_promovabilitate"] . '% (' . $highschool["an_procent_promovabilitate"] . ')</p>
+                                                <p class="text-grey-2 mb-1"><strong>Medie Admitere:</strong> ' . $highschool["medie"] . ' (' . $highschool["an_medie_admitere"] . ')</p>
                                             </div>
-                                            <!-- Image -->
-                                            <div class="col-md-5">
-                                                <img src=' .  $highschool['imagine'] . ' " class="img-fluid h-100 object-fit-cover" alt="Liceu">
+                                            <div>
+                                                <a class="btn bg-accent-3 text-white rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" href="prezentare-liceu.php?liceu=' . $highschool["id"] . '">Vezi detalii</a>
+                                                <button class="add-to-wishlist btn btn-outline-accent-3 rounded-pill px-4 py-2 heading-font text-center text-lg-start mt-3" id="favoriteBtn" 
+                                                data-highschool-name="' . $highschool["nume"]. '" 
+                                                data-highschool-sector="' . $highschool["sector"]. '" 
+                                                data-highschool-promovabilitate="' . $highschool["procent_promovabilitate"]. '" 
+                                                data-highschool-last-year="' . $highschool["an_procent_promovabilitate"]. '" 
+                                                data-highschool-medie="' . $highschool["medie"]. '"
+                                                data-highschool-id="' . $highschool["id"]. '"
+                                                data-highschool-img="' . $highschool["imagine"]. '">
+                                                    <i class="bi bi-heart"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <!-- Image -->
+                                        <div class="col-md-5 d-flex align-items-stretch justify-content-center">
+                                            <div class="w-100 h-100 d-flex align-items-stretch">
+                                                <img src="' . $highschool['imagine'] . '" class="img-fluid rounded-end-4 object-fit-cover h-100 w-100" alt="Liceu" style="object-fit:cover; aspect-ratio:4/3;">
                                             </div>
                                         </div>
                                     </div>
-                                </div>';
-                    } 
+                                </div>
+                            </div>';
+                    }
 
                     ?>
                 </div>

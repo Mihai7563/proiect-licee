@@ -4,7 +4,7 @@ echo '<footer class="bg-black text-white py-4">
         <div class="row">
             <!-- Logo & Title -->
             <div class="col-md-3">
-                <h4 class="fw-bold heading-font">SiteName</h4>
+                <h4 class="fw-bold heading-font">Micul Licean</h4>
                 <p class="small">Informații relevante și actualizate.</p>
             </div>
 
@@ -42,7 +42,7 @@ echo '<footer class="bg-black text-white py-4">
         <!-- Copyright -->
         <div class="text-center mt-4">
             <hr class="border-light">
-            <p class="small mb-0">&copy; 2025 SiteName. Toate drepturile rezervate.</p>
+            <p class="small mb-0">&copy; 2025 MICUL LICEAN. Toate drepturile rezervate.</p>
         </div>
     </div>
 </footer>';

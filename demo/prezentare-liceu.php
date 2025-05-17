@@ -2,6 +2,7 @@
   include "assets/php/_config.php";
   include "assets/php/connect.php";
   include "assets/php/highschool.php";
+  include "assets/php/transliteration.php";
 
   $idLiceu = isset($_GET["liceu"]) ? $_GET["liceu"] : '0'; 
   $highschoolData = getHighschoolData($idLiceu, $conn);
@@ -55,7 +56,6 @@
         <h1 class="heading-font text-color-heading-1 text-center">
           <?php echo $highschoolData['nume'] ?>
         </h1>
-
         <!-- Profiluri -->
         <div class="d-none d-lg-flex justify-content-center">
           <?php
@@ -70,7 +70,7 @@
     
     <!-- ACREDITARI -->
 
-    <div class="container mb-5">
+    <div class="container mb-2">
       <div class="d-flex flex-wrap justify-content-center">
         <?php
           foreach ($highschoolData["acreditari"] as $acreditare) {
@@ -79,6 +79,31 @@
         ?>
       </div>
     </div>
+
+    <!-- PROGRAM -->
+    <div class="container mb-4">
+      <div class="row justify-content-center align-items-center">
+      <?php
+        $program = $highschoolData['program'];
+        $icon = '';
+        $denumireNormalizata = normalizeString($program[0]['denumire']);
+        if (stripos($denumireNormalizata, 'mixt') !== false) {
+        $icon = '<i class="bi bi-clock-history me-1 opacity-75"></i>';
+        } elseif (stripos($denumireNormalizata, 'dimineata') !== false) {
+        $icon = '<i class="bi bi-brightness-high me-1 opacity-75"></i>';
+        } elseif (stripos($denumireNormalizata, 'dupa-amiaza') !== false) {
+        $icon = '<i class="bi bi-moon me-1 opacity-75"></i>';
+        }
+      ?>
+      <div class="col-auto mb-5">
+        <span class="fs-6 d-flex align-items-center heading-font" style="border-radius: 8px; background: none; color: #444;">
+        <?php echo $icon; ?>
+        <span style="font-size: 0.97em;"><?php echo $program[0]['denumire']; ?></span>
+        </span>
+      </div>
+      </div>
+    </div>
+    
 
     <div class="container">
       <div class="row mb-5 align-items-center">
@@ -165,7 +190,11 @@
       <!-- CLUBS AND ACTIVITIES -->
       <section class="mb-5">
         <div class="container">
-          <h2 class="fs-3 mb-3 heading-font text-color-heading-1 text-uppercase">Cluburi & activități</h2>
+            <h2 class="fs-3 mb-3 heading-font text-color-heading-1 text-uppercase">
+            <i class="bi bi-people-fill me-2"></i> Cluburi & activități
+            </h2>
+            <div class="mb-4">
+          </div>
           <div class="row">
             <?php
             foreach ($highschoolData["cluburi"] as $club) {
@@ -213,20 +242,19 @@
     </div>
 
     <!-- HIGHSCHOOL FOOTER -->
-    <footer class="py-4 bg-accent-1">
-      <div class="container border-top border-2 pt-3 text-white">
+    <footer class="py-4">
+      <div class="container border-top border-2 pt-3 border-dark">
         <div class="row align-items-center">
           <!-- Contact Information -->
           <div class="col-md-6">
-            <p><i class="bi bi-envelope-fill me-2"></i><span class="heading-font">Email:</span> haretiana2012@hotmail.com</p>
-            <p><i class="bi bi-telephone-fill me-2"></i><span class="heading-font">Telefon:</span> 021 313 6462</p>
-            <p><i class="bi bi-geo-alt-fill me-2"></i><span class="heading-font">Locație:</span> Strada Italiană 17, București</p>
+            <p><i class="bi bi-envelope-fill me-2"></i><span class="heading-font">Email:</span> <?php echo $highschoolData['email'] ?></p>
+            <p><i class="bi bi-telephone-fill me-2"></i><span class="heading-font">Telefon:</span> <?php echo $highschoolData['telefon'] ?></p>
+            <p><i class="bi bi-geo-alt-fill me-2"></i><span class="heading-font">Locație:</span> <?php echo $highschoolData['locatie']; ?></p>
           </div>
           <!-- Google Maps Embed -->
           <div class="col-md-6">
             <iframe 
-              src=
-              <?php echo $highschoolData['locatie'] ?> 
+              src= "<?php echo $highschoolData['embed_harta'] ?>"
               width="100%" height="200" style="border-radius: 10px; border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
             </iframe>
           </div>

@@ -6,7 +6,15 @@ function getHighschoolsList($conn){
                     (SELECT GROUP_CONCAT(`profiluri`.`denumire` SEPARATOR ', ') 
                      FROM `profiluri_licee` 
                      JOIN `profiluri` ON `profiluri_licee`.`id_profil` = `profiluri`.`id` 
-                     WHERE `profiluri_licee`.`id_liceu` = `licee`.`id`) AS 'profil'
+                     WHERE `profiluri_licee`.`id_liceu` = `licee`.`id`) AS 'profil',
+                    (SELECT GROUP_CONCAT(DISTINCT `categorii_cluburi`.`denumire` SEPARATOR ', ')
+                     FROM `cluburi`
+                     JOIN `categorii_cluburi` ON `cluburi`.`categorie_id` = `categorii_cluburi`.`id`
+                     WHERE `cluburi`.`id_liceu` = `licee`.`id`) AS 'categorii_cluburi',
+                    (SELECT `programe`.`denumire`
+                     FROM `programe_licee`
+                     JOIN `programe` ON `programe_licee`.`id_program` = `programe`.`id`
+                     WHERE `programe_licee`.`id_liceu` = `licee`.`id`) AS 'program'
                 FROM 
                     `licee` JOIN 
                     (
@@ -29,6 +37,22 @@ function getHighschoolsList($conn){
                     ) AS `medii_admitere` ON `licee`.`id` = `medii_admitere`.`id_liceu`
                 ORDER BY 
                     `nume`";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getProgramsList($conn){
+    $query = "SELECT * FROM `programe`";
+    $stmt = $conn->prepare($query);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getClubCategories($conn){
+    $query = "SELECT * FROM `categorii_cluburi`";
     $stmt = $conn->prepare($query);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -71,6 +95,7 @@ function getHighschoolData($idLiceu, $conn){
     $highschoolData["profiluri"] = getHighschoolProfiles($idLiceu, $conn);
     $highschoolData["acreditari"] = getHighschoolAcreditations($idLiceu, $conn);
     $highschoolData["cluburi"] = getHighschoolClubs($idLiceu, $conn);
+    $highschoolData["program"] = getHighschoolProgram($idLiceu, $conn);
     return $highschoolData;
 }
 
@@ -101,6 +126,21 @@ function getHighschoolProfiles($idLiceu, $conn){
                     `id_liceu` = ?
                 ORDER BY
                     `profiluri_licee`.`prioritate`";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $idLiceu); // "i" = integer
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getHighschoolProgram($idLiceu, $conn){
+    $query = "  SELECT
+                    `programe`.`denumire`
+                FROM
+                    `programe_licee` JOIN 
+                    `programe` ON `programe_licee`.`id_program` = `programe`.`id`	
+                WHERE
+                    `id_liceu` = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $idLiceu); // "i" = integer
     $stmt->execute();
