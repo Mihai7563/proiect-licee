@@ -1,5 +1,7 @@
 const isLargeScreen = window.matchMedia("(min-width: 1024px)").matches;
+const noResultsMessage = document.querySelector('.no-results-message');
 let applyBtn = null;
+let resetBtn = null;
 let sectorSelect = null;
 let minAverageInput = null;
 let maxAverageInput = null;
@@ -9,19 +11,22 @@ if(isLargeScreen) {
     sectorSelect = document.getElementById('sectorSelect');
     minAverageInput = document.getElementById('minAverage');
     maxAverageInput = document.getElementById('maxAverage');
+    resetBtn = document.querySelector('.reset-filters-btn');
 }
 else {
     applyBtn = document.querySelector('.apply-filters-btn-mobile');
     sectorSelect = document.getElementById('sectorSelectMobile');
     minAverageInput = document.getElementById('minAverageMobile');
     maxAverageInput = document.getElementById('maxAverageMobile');
+    resetBtn = document.querySelector('.reset-filters-btn-mobile');
 }
 
 applyBtn.addEventListener('click', () => {
+    noResultsMessage.style.display = 'none';
     const filters = [];
     const clubFilters = [];
     const programFilters = [];
-    const highschoolCards = document.querySelectorAll('.school-card');
+    const highschoolCards = Array.from(document.querySelectorAll('.school-card'));
 
     // PROFILES
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked[data-filter-type="profil"]');
@@ -69,5 +74,35 @@ applyBtn.addEventListener('click', () => {
         } else {
             card.style.display = 'none';
         }
+    });
+
+    if(!(highschoolCards.some(card => card.style.display === 'block'))) {
+
+        noResultsMessage.style.display = 'block';
+    }
+});
+
+resetBtn.addEventListener('click', () => {
+    noResultsMessage.style.display = 'none';
+    const checkboxes = Array.from(document.querySelectorAll('input[type="checkbox"]'));
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
+    if (sectorSelect) {
+        sectorSelect.value = '';
+    }
+
+    if (minAverageInput) {
+        minAverageInput.value = '';
+    }
+
+    if (maxAverageInput) {
+        maxAverageInput.value = '';
+    }
+
+    const highschoolCards = Array.from(document.querySelectorAll('.school-card'));
+    highschoolCards.forEach(card => {
+        card.style.display = 'block';
     });
 });

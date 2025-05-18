@@ -144,6 +144,7 @@
                     </select>
                 </div>
                 <button class="apply-filters-btn btn bg-accent-3 text-white w-100 rounded-pill heading-font">Aplică</button>
+                <button class="reset-filters-btn btn bg-grey-2 text-white w-100 mt-2 rounded-pill heading-font">Resetează</button>
             </div>
         </div>
         <!--    MOBILE FULSCREEN FILTER -->
@@ -260,6 +261,7 @@
                 </div>
             </div>
             <button class="apply-filters-btn-mobile btn bg-accent-3 text-white w-100 rounded-pill heading-font mt-3 py-3">Aplică Filtre</button>
+            <button class="reset-filters-btn-mobile btn bg-grey-2 text-white w-100 mt-2 rounded-pill heading-font">Resetează</button>
         </div>
     </div>
 
@@ -276,6 +278,10 @@
         <section>
             <div class="container">
                 <div class="row g-4 mb-4" id="highschool-list">
+                    <div class="no-results-message" style="display: none;">	
+                        <h5 class="text-center text-grey-2">Ne pare rau, dar nu am găsit licee care să corespundă criteriilor tale de căutare.</h5>
+                        <p class="text-center text-grey-2">Încercă să modifici filtrele sau să cauți din nou.</p>
+                    </div>
                     <?php 
                     if($sortOption){
                         usort($highschoolsList, function($a, $b) use ($sortOption) {
@@ -363,53 +369,9 @@
 
 
 
-    <footer class="bg-black text-white py-4">
-    <div class="container">
-        <div class="row">
-            <!-- Logo & Title -->
-            <div class="col-md-3">
-                <h4 class="fw-bold heading-font">SiteName</h4>
-                <p class="small">Informații relevante și actualizate.</p>
-            </div>
-
-            <!-- Navigation Links -->
-            <div class="col-md-3">
-                <h5 class="text-uppercase heading-font">Navigație</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-light text-decoration-none">Acasă</a></li>
-                    <li><a href="#" class="text-light text-decoration-none">Despre</a></li>
-                    <li><a href="#" class="text-light text-decoration-none">Servicii</a></li>
-                    <li><a href="#" class="text-light text-decoration-none">Contact</a></li>
-                </ul>
-            </div>
-
-            <!-- Contact Info -->
-            <div class="col-md-3">
-                <h5 class="text-uppercase heading-font">Contact</h5>
-                <ul class="list-unstyled">
-                    <li><i class="bi bi-envelope"></i> contact@email.com</li>
-                    <li><i class="bi bi-telephone"></i> +40 123 456 789</li>
-                    <li><i class="bi bi-geo-alt"></i> București, România</li>
-                </ul>
-            </div>
-
-            <!-- Social Media Links -->
-            <div class="col-md-3">
-                <h5 class="text-uppercase heading-font">Urmărește-ne</h5>
-                <a href="#" class="text-light me-2 mb-2"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="text-light me-2 mb-2"><i class="bi bi-instagram"></i></a>
-                <a href="#" class="text-light me-2 mb-2"><i class="bi bi-youtube"></i></a>
-                <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
-            </div>
-        </div>
-
-        <!-- Copyright -->
-        <div class="text-center mt-4">
-            <hr class="border-light">
-            <p class="small mb-0">&copy; 2025 SiteName. Toate drepturile rezervate.</p>
-        </div>
-    </div>
-</footer>
+    <?php
+      include 'assets/php/footer.php';
+    ?>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
