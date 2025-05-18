@@ -23,31 +23,29 @@ applyBtn.addEventListener('click', () => {
     const programFilters = [];
     const highschoolCards = document.querySelectorAll('.school-card');
 
-    // Filtre pentru profiluri
+    // PROFILES
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked[data-filter-type="profil"]');
     checkboxes.forEach(checkbox => {
         filters.push(checkbox.value);
     });
 
-    // Filtre pentru categorii cluburi
+    // CLUBS
     const clubCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked[data-filter-type="club"]');
     clubCheckboxes.forEach(checkbox => {
         clubFilters.push(checkbox.value);
     });
 
-    // Filtre pentru program
+    // PROGRAM 
     const programCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked[data-filter-type="program"]');
     programCheckboxes.forEach(checkbox => {
         programFilters.push(checkbox.value);
     });
 
-    // Filtru pentru sector
+    // SECTOR
     const selectedSector = sectorSelect ? sectorSelect.value : '';
 
     console.log(`test sector select = ${sectorSelect}`);
     
-
-    // Media minimă și maximă
     const minAverage = minAverageInput && minAverageInput.value ? parseFloat(minAverageInput.value) : null;
     const maxAverage = maxAverageInput && maxAverageInput.value ? parseFloat(maxAverageInput.value) : null;
 

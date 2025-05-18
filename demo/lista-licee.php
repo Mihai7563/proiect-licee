@@ -9,9 +9,9 @@
   $clubCategories = getClubCategories($conn);
   $programsList = getProgramsList($conn);
   $sortOption = isset($_GET['sort']) ? $_GET['sort'] : null;
-//   echo "<pre>";
-//   print_r($highschoolsList);
-//   echo "</pre>";
+  echo "<pre>";
+  print_r($highschoolsList);
+  echo "</pre>";
 ?>
 
 <!DOCTYPE html>
@@ -67,20 +67,16 @@
             <div class="card-body">
                 <h6 class="mb-3 text-accent-3 heading-font">Ordonează după</h6>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="sortOptions" value="medie_admitere" id="sortByAdmissionAverage">
+                    <input class="form-check-input" type="radio" name="sortOptions" value="medie-admitere" id="sortByAdmissionAverage">
                     <label class="form-check-label text-grey-2" for="sortByAdmissionAverage">Medie Admitere</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="sortOptions" value="procent_promovabilitate" id="sortByPassRate">
+                    <input class="form-check-input" type="radio" name="sortOptions" value="promovabilitate" id="sortByPassRate">
                     <label class="form-check-label text-grey-2" for="sortByPassRate">Promovabilitate</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="sortOptions" value="nume_az" id="sortByNameAZ">
+                    <input class="form-check-input" type="radio" name="sortOptions" value="nume" id="sortByNameAZ">
                     <label class="form-check-label text-grey-2" for="sortByNameAZ">Nume (A-Z)</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="sortOptions" value="nume_za" id="sortByNameZA">
-                    <label class="form-check-label text-grey-2" for="sortByNameZA">Nume (Z-A)</label>
                 </div>
                 <button class="btn bg-accent-3 text-white w-100 rounded-pill heading-font mt-3" onclick="applySort()">Aplică</button>
             </div>
@@ -279,7 +275,7 @@
 
         <section>
             <div class="container">
-                <div class="row g-4 mb-4">
+                <div class="row g-4 mb-4" id="highschool-list">
                     <?php 
                     if($sortOption){
                         usort($highschoolsList, function($a, $b) use ($sortOption) {
@@ -298,14 +294,36 @@
                     
                     
                     foreach ($highschoolsList as $highschool){
-                        echo '<div class="school-card col-12 col-lg-6" data-profile="' . $highschool["profil"] . '" data-categorii-cluburi="' . $highschool["categorii_cluburi"] . '" data-program="' . $highschool["program"] . '" data-sector="' . $highschool["sector"] . '" data-medie-admitere="' . $highschool["medie"] . '">
+                        // Calculează stelele pe baza ratingului liceului (ex: 4.5)
+                        $rating = isset($highschool['rating']) ? floatval($highschool['rating']) : 0;
+                        $fullStars = floor($rating);
+                        $halfStar = ($rating - $fullStars) >= 0.25 && ($rating - $fullStars) < 0.75 ? 1 : 0;
+                        if (($rating - $fullStars) >= 0.75) {
+                            $fullStars++;
+                            $halfStar = 0;
+                        }
+                        $emptyStars = 5 - $fullStars - $halfStar;
+
+                        $starsHtml = '';
+                        for ($i = 0; $i < $fullStars; $i++) {
+                            $starsHtml .= '<i class="bi bi-star-fill text-warning"></i>';
+                        }
+                        if ($halfStar) {
+                            $starsHtml .= '<i class="bi bi-star-half text-warning"></i>';
+                        }
+                        for ($i = 0; $i < $emptyStars; $i++) {
+                            $starsHtml .= '<i class="bi bi-star text-warning"></i>';
+                        }
+
+                        echo '<div class="school-card col-12 col-lg-6" data-nume="' . $highschool['nume'] . '" data-profile="' . $highschool["profil"] . '" data-categorii-cluburi="' . $highschool["categorii_cluburi"] . '" data-program="' . $highschool["program"] . '" data-sector="' . $highschool["sector"] . '" data-medie-admitere="' . $highschool["medie"] . '" data-promovabilitate="' . $highschool["procent_promovabilitate"] . '">
                                 <div class="card border-0 rounded-4 overflow-hidden bg-white h-100 d-flex flex-column">
                                     <div class="row g-0 h-100">
                                         <!-- Content -->
                                         <div class="col-md-7 p-3 d-flex flex-column justify-content-between">
                                             <div>
                                                 <div class="d-flex align-items-center mb-2">
-                                                    <span>⭐⭐⭐⭐⭐</span>
+                                                    ' . $starsHtml . '
+                                                    <span class="ms-2 small text-grey-2">' . number_format($rating, 1) . '</span>
                                                 </div>
                                                 <h5 class="heading-font text-color-heading-1">' . $highschool["nume"] . '</h5>
                                                 <p class="text-color-heading-1 mb-1 border-bottom border-2"> Sector ' . $highschool["sector"] . ', București</p>

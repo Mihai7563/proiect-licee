@@ -47,13 +47,39 @@
       <div class="container my-3">
         <div class="row mb-5">
           <div class="col-12 col-lg-6 text-lg-start heading-font">
-            ⭐⭐⭐⭐⭐ <u>91 recenzii</u>
+            <?php
+            // Calculează stelele pe baza ratingului liceului (ex: 4.5)
+                        $rating = isset($highschoolData['rating']) ? floatval($highschoolData['rating']) : 0;
+                        $fullStars = floor($rating);
+                        $halfStar = ($rating - $fullStars) >= 0.25 && ($rating - $fullStars) < 0.75 ? 1 : 0;
+                        if (($rating - $fullStars) >= 0.75) {
+                            $fullStars++;
+                            $halfStar = 0;
+                        }
+                        $emptyStars = 5 - $fullStars - $halfStar;
+
+                        $starsHtml = '';
+                        for ($i = 0; $i < $fullStars; $i++) {
+                            $starsHtml .= '<i class="bi bi-star-fill text-warning"></i>';
+                        }
+                        if ($halfStar) {
+                            $starsHtml .= '<i class="bi bi-star-half text-warning"></i>';
+                        }
+                        for ($i = 0; $i < $emptyStars; $i++) {
+                            $starsHtml .= '<i class="bi bi-star text-warning"></i>';
+                        }
+
+                        echo '<div class="d-flex align-items-center mb-2">
+                            <span class="me-2">Recenzii: </span> ' . $starsHtml . '
+                            <span class="ms-2 small text-grey-2">' . number_format($rating, 1) . '</span>
+                        </div>';
+            ?>
           </div>
           <div class="col-12 col-lg-6 text-lg-end heading-font">
             RATĂ DE PROMOVABILITATE: <?php echo number_format($highschoolData['rata_promovabilitate_curenta'], 2)?> %
           </div>
         </div>
-        <h1 class="heading-font text-color-heading-1 text-center">
+        <h1 class="heading-font text-color-heading-1 text-center mb-4">
           <?php echo $highschoolData['nume'] ?>
         </h1>
         <!-- Profiluri -->
@@ -71,10 +97,10 @@
     <!-- ACREDITARI -->
 
     <div class="container mb-2">
-      <div class="d-flex flex-wrap justify-content-center">
+      <div class="d-flex align-items-center flex-wrap justify-content-center">
         <?php
           foreach ($highschoolData["acreditari"] as $acreditare) {
-            echo '<span class="badge bg-accent-3 text-white rounded-pill me-2 mb-2 px-4 py-3 fs-6">' . $acreditare['denumire'] . '</span>';
+            echo '<span class="badge bg-accent-3 text-white rounded-pill me-2 mb-2 px-3 py-2">' . $acreditare['denumire'] . '</span>';
           }
         ?>
       </div>
@@ -118,7 +144,7 @@
             </p>
             <div class="text-center text-lg-start">
                 <button 
-                  class="add-to-wishlist btn btn-favorite bg-accent-2 text-white rounded-pill px-4 py-2 mt-3 heading-font"
+                  class="add-to-wishlist btn btn-favorite bg-accent-2 text-white rounded-pill px-4 py-3 pe-5 mt-3 heading-font"
                   data-highschool-name="<?php echo $highschoolData['nume']; ?>"
                   data-highschool-sector="<?php echo $highschoolData['sector']; ?>"
                   data-highschool-promovabilitate="<?php echo $highschoolData['rata_promovabilitate_curenta']; ?>"
@@ -126,7 +152,7 @@
                   data-highschool-medie="<?php echo $highschoolData['medie_admitere_curenta']; ?>"
                   data-highschool-id="<?php echo $highschoolData['id']; ?>"
                   data-highschool-img="<?php echo $highschoolData['imagine']; ?>">
-                  <i class="bi bi-heart"></i> Adaugă la favorite
+                  <i class="bi bi-heart me-2"></i> Adaugă la favorite
                 </button>
             </div>
           </div>
@@ -185,60 +211,119 @@
         </div>
       </section>
       
-
-
-      <!-- CLUBS AND ACTIVITIES -->
+      <!-- PROFILES DESCRIPTIONS-->
       <section class="mb-5">
         <div class="container">
             <h2 class="fs-3 mb-3 heading-font text-color-heading-1 text-uppercase">
-            <i class="bi bi-people-fill me-2"></i> Cluburi & activități
+            <i class="bi bi-journal-bookmark-fill me-2"></i> Profiluri
             </h2>
             <div class="mb-4">
           </div>
           <div class="row">
             <?php
-            foreach ($highschoolData["cluburi"] as $club) {
+            foreach ($highschoolData["profiluri"] as $profil) {
                 echo '<div class="col-12 col-md-6 col-lg-4 mb-3">
                         <div class="card p-3 h-100 d-flex flex-column justify-content-between border-2">';
-                        
                 // Details
                 echo '    <!-- Details -->
                           <div class="details mb-2">
-                          <div class="name heading-font text-start">
-                              <div>
-                                <span class="badge bg-accent-3 text-white rounded-pill">' . $club["categorie"] . '</span>
+                            <div class="name heading-font text-start">
+                                <div>
+                                  <span class="badge bg-accent-2 text-white rounded-pill">' . $profil["categorie_profil"] . '</span>
+                                </div>
+                                <h3 class = "fs-5 text-uppercase fw-bold mt-3 border-dark pb-2">' . $profil["denumire"] . '</h3>	
                               </div>
-                              <h3 class = "fs-5 text-uppercase fw-bold mt-3">' . $club["nume_club"] . '</h3>	
+                                <hr class="border-accent-3 border-2">
+                              <div class="description text-start mb-2 text-b">Medie admitere: ' . number_format($profil["medie_admitere"], 2)  . '</div>
                             </div>
-                            <div class="description text-start mb-2 text-b">'. $club["descriere_club"] . '</div>
-                          </div>';
-
-                // Contact
-                  echo '    <!-- Decoration -->
-                    <div class="decoration text-center">
-                      <hr class="border-accent-3 border-2">
-                    </div>';
-
-                // Button
-                  echo '    <div class="social-media mt-2">
-                              <a href="#" target="_blank" class="me-2">
-                                <i class="bi bi-instagram fs-4 text-accent-2"></i>
-                              </a>
-                              <a href="#" target="_blank" class="me-2">
-                                <i class="bi bi-facebook fs-4 text-accent-2"></i>
-                              </a>
-                              <a href="#" target="_blank" class="me-2">
-                                <i class="bi bi-twitter fs-4 text-accent-2"></i>
-                              </a>
-                            </div>';
-
-                echo '  </div>'; 
-                echo '</div>';
+                          </div> 
+                        </div>';
             }
             ?>
           </div>
         </div>
       </section>
+
+      <!-- CLUBS AND ACTIVITIES -->
+      <section class="mb-5">
+        <div class="container">
+        <h2 class="fs-3 mb-3 heading-font text-color-heading-1 text-uppercase">
+        <i class="bi bi-people-fill me-2"></i> Cluburi & activități
+        </h2>
+        <div class="mb-4">
+          <!-- Filter Dropdown -->
+            <div class="d-flex justify-content-start">
+            <select 
+              id="club-category-filter" 
+              class="form-select w-auto px-4 py-2 rounded-pill bg-accent-3 text-white border-0 heading-font pe-5"
+            >
+              <option value="all" class="bg-white text-black">Toate categoriile</option>
+              <?php
+              $categories = [];
+              foreach ($highschoolData["cluburi"] as $club) {
+                $categories[] = $club["categorie"];
+              }
+              foreach (array_unique($categories) as $cat) {
+                echo '<option value="' . $cat . '" class="bg-white text-black">' . $cat . '</option>';
+              }
+              ?>
+            </select>
+            </div>
+        </div>
+          <div class="row" id="cluburi-list">
+        <?php
+        foreach ($highschoolData["cluburi"] as $club) {
+        echo '<div class="col-12 col-md-6 col-lg-4 mb-3 club-item" data-categorie="' . $club["categorie"] . '">
+        <div class="card p-3 h-100 d-flex flex-column justify-content-between border-2">';
+        
+        // Details
+        echo '    <!-- Details -->
+          <div class="details mb-2">
+          <div class="name heading-font text-start">
+          <div>
+            <span class="badge bg-accent-3 text-white rounded-pill">' . $club["categorie"] . '</span>
+          </div>
+          <h3 class = "fs-5 text-uppercase fw-bold mt-3">' . $club["nume_club"] . '</h3>	
+            </div>
+            <div class="description text-start mb-2 text-b">'. $club["descriere_club"] . '</div>
+          </div>';
+
+        // Contact
+          echo '    <!-- Decoration -->
+        <div class="decoration text-center">
+          <hr class="border-accent-3 border-2">
+        </div>';
+
+        // Button
+          echo '    <div class="social-media mt-2">
+          <a href="#" target="_blank" class="me-2">
+            <i class="bi bi-instagram fs-4 text-accent-2"></i>
+          </a>
+            </div>';
+
+        echo '  </div>'; 
+        echo '</div>';
+        }
+        ?>
+          </div>
+        </div>
+      </section>
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          const filter = document.getElementById('club-category-filter');
+          const items = document.querySelectorAll('.club-item');
+          filter.addEventListener('change', function() {
+        const val = this.value;
+        items.forEach(function(item) {
+          if (val === 'all' || item.getAttribute('data-categorie') === val) {
+        item.style.display = '';
+          } else {
+        item.style.display = 'none';
+          }
+        });
+          });
+        });
+      </script>
     </div>
 
     <!-- HIGHSCHOOL FOOTER -->

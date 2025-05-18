@@ -118,10 +118,13 @@ function getHighschoolGraduationRate($idLiceu, $conn){
 function getHighschoolProfiles($idLiceu, $conn){
     $query = "  SELECT
                     `profiluri_licee`.`prioritate`,
-                    `profiluri`.`denumire`
+                    `profiluri`.`denumire`,
+                    `profiluri_licee`.`medie_admitere`,
+                    `categorii_profiluri`.`denumire` AS `categorie_profil`
                 FROM
                     `profiluri_licee` JOIN 
-                    `profiluri` ON `profiluri_licee`.`id_profil` = `profiluri`.`id`	
+                    `profiluri` ON `profiluri_licee`.`id_profil` = `profiluri`.`id`	JOIN
+                    `categorii_profiluri` ON `profiluri`.`id_categorie_profiluri` = `categorii_profiluri`.`id` 
                 WHERE
                     `id_liceu` = ?
                 ORDER BY

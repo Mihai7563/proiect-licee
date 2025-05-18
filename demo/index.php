@@ -308,8 +308,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="video-container">
-                    <iframe width="100%" height="400" src="https://www.youtube.com/embed/VIDEO_ID" 
-                        title="Video" frameborder="0" allowfullscreen></iframe>
+                    <a href="https://www.youtube.com/watch?v=VIDEO_ID" target="_blank" class="btn btn-light rounded-pill px-4 py-2 heading-font">
+                        Vezi video pe YouTube
+                    </a>
                 </div>
             </div>
         </div>
